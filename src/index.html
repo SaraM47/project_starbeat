@@ -3,12 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="scss/main.scss">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/main.scss">
     <script type="module" src="js/app.js"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#">
+                    <picture>
+                        <source srcset="css/assets/images/logo-starbeat.png?as=webp&width=500" type="image/webp">
+                        <img src="css/assets/images/logo-starbeat.png" alt="StarBeat Logo">
+                    </picture>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><span>|</span></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><span>|</span></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+            <div class="search-container">
+                <label for="search">Search</label>
+                <div class="search-wrapper">
+                    <input type="text" id="search" name="search" placeholder="Search">
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
     
 </body>
 </html>
