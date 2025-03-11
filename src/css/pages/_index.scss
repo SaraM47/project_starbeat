@@ -1,0 +1,105 @@
+@use "../abstracts/variables";
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.subheading {
+    font-size: 1.2rem;
+    color: variables.$text-color;
+    margin-bottom: 1rem;
+}
+
+/* ARTIST SPOTLIGHT */
+.artist-spotlight {
+    margin-bottom: 3rem;
+
+    .artist-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .artist-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #ccc;
+        }
+
+        p {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: variables.$text-color;
+        }
+    }
+}
+
+/* TOP SONGS */
+.top-songs {
+    margin-bottom: 3rem;
+
+    .song-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .song-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #ccc;
+        }
+
+        p {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: variables.$text-color;
+        }
+    }
+}
+
+/* ALBUM SECTION */
+.albums {
+    .album-container {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .album-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            background: #ccc;
+        }
+
+        p {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: variables.$text-color;
+        }
+    }
+}
