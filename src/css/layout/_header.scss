@@ -6,8 +6,7 @@
     align-items: center;
     padding: 1rem 2rem;
     color: variables.$text-color;
-    height: 100%;
-    flex-wrap: nowrap;
+    height: 80px;
     font-weight: bold;
 
     .logo {
@@ -16,15 +15,18 @@
     }
 
     .logo img {
-        height: 18ch;
+        height: 14ch;
         object-fit: contain;
+        padding-top: 2rem;
     }
 
     .nav-links {
         display: flex;
         gap: 1rem;
         list-style: none;
-
+        position: absolute; 
+        left: 50%;
+        transform: translateX(-50%);
 
         li {
             display: flex;
@@ -77,5 +79,5 @@
             font-size: 1rem;
         }
     }
-    
+
 }
