@@ -1,103 +1,138 @@
 @use "../abstracts/variables";
 
 .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .subheading {
-    font-size: variables.$font-size-large;
-    color: variables.$text-color;
-    margin-bottom: 1rem;
+  font-size: variables.$font-size-large;
+  color: variables.$text-color;
+  margin-bottom: 1rem;
 }
 
 /* ARTIST SPOTLIGHT & HANDPICKED SONGS */
-.artist-spotlight, .specifik-track-songs {
-    margin-bottom: 6rem;
+.artist-spotlight,
+.specifik-track-songs {
+  margin-bottom: 6rem;
 
-    .artist-container, .song-container {
-        display: flex;
-        justify-content: center;
-        gap: 4rem;
+  .artist-container,
+  .song-container {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  .artist-card,
+  .song-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ccc;
     }
 
-    .artist-card, .song-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ccc;
-        }
-
-        p {
-            margin-top: 0.5rem;
-            font-size: variables.$font-size-base;
-            color: variables.$text-color;
-        }
+    p {
+      margin-top: 0.5rem;
+      font-size: variables.$font-size-base;
+      color: variables.$text-color;
     }
+  }
 }
 
 h1 {
-    font-size: variables.$font-size-xlarge;
+  font-size: variables.$font-size-xlarge;
 }
 
 .specifik-track-songs {
-    .song-container {
-        flex-wrap: wrap;
-    }
+  .song-container {
+    flex-wrap: wrap;
+  }
 
-    .song-card {
-        max-width: 150px;
-    }
+  .song-card {
+    max-width: 150px;
+  }
 }
 
 /* ALBUM SECTION */
 .albums {
+  padding: 2rem;
+  text-align: center;
 
-    padding: 2rem;
-    text-align: center;
-    
-    .slider-container {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+  }
+
+  .album-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px; 
+    mask-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1) 20%,
+      rgba(0, 0, 0, 1) 80%,
+      rgba(0, 0, 0, 0)
+    );
+  }
+
+  .album-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2rem; 
+    animation: scrollLeft 30s linear infinite;
+  }
+
+  @keyframes scrollLeft {
+    to {
+      left: -200px;
+    }
+  }
+
+  .album-card {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: max(calc(200px * 10), 100%);
+    animation-name: scrollLeft;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+    // Dynamic delay for album cards
+  @for $i from 1 through 10 {
+    .album-card:nth-child(#{$i}) {
+      animation-delay: calc(30s / 10 * (30 - #{$i}) * -1);
+    }
+  }
+
+  .album-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      background: #ccc;
     }
 
-    .album-container {
-        display: flex;
-        width: 200%; 
-        animation: slide 15s linear infinite;
-        gap: 2rem;
+    p {
+      margin-top: 0.5rem;
+      font-size: variables.$font-size-large;
+      color: variables.$text-color;
     }
-
-      // Pause animation on hover
-   .slider-container:hover .album-container {
-    animation-play-state: paused;
-    }
-
-    .album-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img {
-            width: 160px;
-            height: 160px;
-            object-fit: cover;
-            background: #ccc;
-        }
-
-        p {
-            margin-top: 0.5rem;
-            font-size: variables.$font-size-large;
-            color: variables.$text-color;
-        }
-    }
+  }
 }
