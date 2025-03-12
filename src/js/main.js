@@ -1,5 +1,4 @@
 // Fetching images and text from Spotify API to Display Artists, Songs & Albums in HTML
-
 async function displayTopArtists() {
     const artists = await window.getTopArtists();
 
@@ -31,12 +30,13 @@ async function displayTopArtists() {
 
 async function displayAlbums() {
     const albums = await window.getNewReleases();
-    const albumContainer = document.querySelector(".album-container");
+    const albumWrapper = document.querySelector(".album-wrapper");
 
-    albumContainer.innerHTML = ""; 
+    albumWrapper.innerHTML = ""; 
 
-    albums.forEach(album => {
-        const albumCard = document.createElement("article");
+    // Limit to viewing 10 albums
+    albums.slice(0, 10).forEach((album, index) => {
+        const albumCard = document.createElement("div");
         albumCard.classList.add("album-card");
 
         const albumImg = document.createElement("img");
@@ -48,9 +48,16 @@ async function displayAlbums() {
 
         albumCard.appendChild(albumImg);
         albumCard.appendChild(albumTitle);
-        albumContainer.appendChild(albumCard);
+        albumWrapper.appendChild(albumCard);
     });
 }
+
+// Run the function after the albums have been downloaded
+window.onload = () => {
+    displayAlbums();
+    setTimeout(duplicateAlbums, 1000);
+};
+
 
 async function displaySpecificTracks() {
     const tracks = await getSpecificTracks(); 
@@ -67,9 +74,9 @@ async function displaySpecificTracks() {
         if (!track) return;
 
         const trackElement = document.createElement("div");
-        trackElement.classList.add("song-card"); // Uppdaterad klass
+        trackElement.classList.add("song-card");
 
-        // Hämta albumets bild, faller tillbaka till default om det saknas
+        // Get the album image, falling back to default if missing
         const imageUrl = track.album?.images[0]?.url || "assets/default.jpg";
 
         trackElement.innerHTML = `
