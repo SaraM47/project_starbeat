@@ -8,22 +8,22 @@
 }
 
 .subheading {
-    font-size: 1.2rem;
+    font-size: variables.$font-size-large;
     color: variables.$text-color;
     margin-bottom: 1rem;
 }
 
-/* ARTIST SPOTLIGHT */
-.artist-spotlight {
-    margin-bottom: 3rem;
+/* ARTIST SPOTLIGHT & HANDPICKED SONGS */
+.artist-spotlight, .specifik-track-songs {
+    margin-bottom: 6rem;
 
-    .artist-container {
+    .artist-container, .song-container {
         display: flex;
         justify-content: center;
-        gap: 2rem;
+        gap: 4rem;
     }
 
-    .artist-card {
+    .artist-card, .song-card {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -38,50 +38,48 @@
 
         p {
             margin-top: 0.5rem;
-            font-size: 1rem;
+            font-size: variables.$font-size-base;
             color: variables.$text-color;
         }
     }
 }
 
-/* TOP SONGS */
-.top-songs {
-    margin-bottom: 3rem;
+h1 {
+    font-size: variables.$font-size-xlarge;
+}
 
+.specifik-track-songs {
     .song-container {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
+        flex-wrap: wrap;
     }
 
     .song-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ccc;
-        }
-
-        p {
-            margin-top: 0.5rem;
-            font-size: 1rem;
-            color: variables.$text-color;
-        }
+        max-width: 150px;
     }
 }
 
 /* ALBUM SECTION */
 .albums {
+
+    padding: 2rem;
+    text-align: center;
+    
+    .slider-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
     .album-container {
         display: flex;
-        justify-content: center;
+        width: 200%; 
+        animation: slide 15s linear infinite;
         gap: 2rem;
-        flex-wrap: wrap;
+    }
+
+      // Pause animation on hover
+   .slider-container:hover .album-container {
+    animation-play-state: paused;
     }
 
     .album-card {
@@ -98,7 +96,7 @@
 
         p {
             margin-top: 0.5rem;
-            font-size: 1rem;
+            font-size: variables.$font-size-large;
             color: variables.$text-color;
         }
     }
