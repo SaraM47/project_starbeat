@@ -1,3 +1,6 @@
+import "./cursor.js";
+
+
 // Fetching images and text from Spotify API to Display Artists, Songs & Albums in HTML
 async function displayTopArtists() {
     const artists = await window.getTopArtists();
