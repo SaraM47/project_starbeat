@@ -1,0 +1,19 @@
+@keyframes fadeUpRotate {
+    0% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1) rotate(0deg); 
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(-30px) scale(1.5) rotate(var(--rotation)); 
+    }
+}
+
+.note {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    font-family: Arial, sans-serif;
+    animation: fadeUpRotate 1s linear forwards;
+}
