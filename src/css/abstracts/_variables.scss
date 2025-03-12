@@ -1,6 +1,12 @@
-// Primary colors from color palette
+// Primary colors for the color palette
 $primary-gradient: linear-gradient(to bottom right, #ffb6c1, #d8b2ff, #8fd3fe, #fff6a9);
 $background-dark: #000000; // Standard defualt dark mode
 $text-color: #ff80ab;
 
+// Typography
 $font-primary: 'Quicksand', sans-serif;
+
+// Font sizes
+$font-size-base: 1.2rem;
+$font-size-large: 1.5rem;   
+$font-size-xlarge: 3rem;
