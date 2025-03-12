@@ -52,13 +52,6 @@ async function displayAlbums() {
     });
 }
 
-// Run the function after the albums have been downloaded
-window.onload = () => {
-    displayAlbums();
-    setTimeout(duplicateAlbums, 1000);
-};
-
-
 async function displaySpecificTracks() {
     const tracks = await getSpecificTracks(); 
 
