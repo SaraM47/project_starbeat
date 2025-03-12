@@ -1,8 +1,15 @@
 // Fetching images and text from Spotify API to Display Artists, Songs & Albums in HTML
-async function displayTopArtists() {
-    const artists = await getTopArtists();
-    const artistContainer = document.querySelector(".artist-container");
 
+async function displayTopArtists() {
+    const artists = await window.getTopArtists();
+
+    if (!artists || artists.length === 0) {
+        console.error("Ingen artistdata hämtades!");
+        document.querySelector(".artist-container").innerHTML = "<p>Ingen artistdata tillgänglig</p>";
+        return;
+    }
+
+    const artistContainer = document.querySelector(".artist-container");
     artistContainer.innerHTML = "";
 
     artists.forEach(artist => {
@@ -23,17 +30,17 @@ async function displayTopArtists() {
 }
 
 async function displayAlbums() {
-    const albums = await getNewReleases();
+    const albums = await window.getNewReleases();
     const albumContainer = document.querySelector(".album-container");
 
     albumContainer.innerHTML = ""; 
 
-    albums.slice(0, 4).forEach(album => {
+    albums.forEach(album => {
         const albumCard = document.createElement("article");
         albumCard.classList.add("album-card");
 
         const albumImg = document.createElement("img");
-        albumImg.src = album.images[0]?.url || "assets/default.jpg"; // If no image exists, using a default image.
+        albumImg.src = album.images[0]?.url || "assets/default.jpg";
         albumImg.alt = album.name;
 
         const albumTitle = document.createElement("p");
@@ -45,8 +52,38 @@ async function displayAlbums() {
     });
 }
 
+async function displaySpecificTracks() {
+    const tracks = await getSpecificTracks(); 
+
+    const trackContainer = document.querySelector(".song-container");
+    trackContainer.innerHTML = "";
+
+    if (!tracks.length) {
+        trackContainer.innerHTML = "<p>Ingen låtdata tillgänglig</p>";
+        return;
+    }
+
+    tracks.forEach(track => {
+        if (!track) return;
+
+        const trackElement = document.createElement("div");
+        trackElement.classList.add("song-card"); // Uppdaterad klass
+
+        // Hämta albumets bild, faller tillbaka till default om det saknas
+        const imageUrl = track.album?.images[0]?.url || "assets/default.jpg";
+
+        trackElement.innerHTML = `
+            <img src="${imageUrl}" alt="${track.name}">
+            <p><strong>${track.name}</strong> - ${track.artists.map(artist => artist.name).join(", ")}</p>
+        `;
+
+        trackContainer.appendChild(trackElement);
+    });
+}
+
 // Run the functions when the page loads
 window.onload = () => {
     displayTopArtists();
     displayAlbums();
+    displaySpecificTracks();
 };
