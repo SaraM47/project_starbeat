@@ -5,15 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="icon" type="image/png" sizes="32x32" href="./css/assets/images/musicnote-icon.png">
     <link rel="icon" type="image/x-icon" href="./css/assets/images/musicnote-icon.ico">
     <link rel="icon" type="image/svg+xml" href="./css/assets/images/musicnote-icon.svg">
     <link rel="stylesheet" href="css/main.scss">
     <script type="module" src="js/spotify.js"></script>
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/theme.js"></script>
 </head>
 
 <body>
+    <!-- LOADING SCREEN -->
+    <div class="loading-screen">
+        <div class="bars">
+            <div class="bars__item"></div>
+            <div class="bars__item"></div>
+            <div class="bars__item"></div>
+            <div class="bars__item"></div>
+            <div class="bars__item"></div>
+        </div>
+        <p>Loading StarBeat...</p>
+    </div>
+
     <header>
         <nav class="navbar">
             <div class="logo">
@@ -32,13 +46,19 @@
                 <li><a href="favorites.html">Favorites</a></li>
             </ul>
             <div class="search-container">
-                <label for="search">Search</label>
+                <label for="search" class="sr-only">Search</label>
                 <div class="search-wrapper">
-                    <input type="text" id="search" name="search" placeholder="Search">
-                    <button type="submit">
+                    <input type="text" id="search" name="search" placeholder="Looking for a song?">
+                    <button type="submit" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
-                </div>
+                </div>                
+            </div>
+            <!-- Standard icon for Dark Mode -->
+            <div class="theme-toggle">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i> 
+                </button>
             </div>
         </nav>
     </header>
@@ -53,10 +73,10 @@
             </div>
         </section>
 
-        <section class="specifik-track-songs">
+        <section class="specific-track-songs">
             <h2 class="subheading">Handpicked songs</h2>
             <div class="song-container">
-                <!-- Songs are added here using JavaScript -->
+                <!-- Songs and with preview play/pause buttons are added here using JavaScript -->
             </div>
         </section>
 
@@ -66,7 +86,7 @@
             <div class="slider-container">
                 <div class="album-wrapper">
                     <div class="album-container">
-                        <!--A lbums are added here using JavaScript-->
+                        <!--Albums are added here using JavaScript-->
                     </div>
                 </div>
             </div>
@@ -78,8 +98,26 @@
             <div class="waves wavey3"></div>
             <div class="waves wavey4"></div>
         </section>
-        
     </main>
+
+    <footer class="mobile-nav">
+        <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="search.html">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a href="playlist.html">
+            <i class="fas fa-folder"></i>
+            <span>Your playlist</span>
+        </a>
+        <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Liked songs</span>
+        </a>
+    </footer>
 </body>
 
 </html>
