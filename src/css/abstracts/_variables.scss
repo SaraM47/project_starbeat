@@ -1,7 +1,18 @@
 // Primary colors for the color palette
 $primary-gradient: linear-gradient(to bottom right, #ffb6c1, #d8b2ff, #8fd3fe, #fff6a9);
-$background-dark: #000000; // Standard defualt dark mode
-$text-color: #ff80ab;
+// Standard by defualt - Dark mode
+$background-dark: #000000;
+$text-dark: #ff80ab;
+
+// Light Mode
+$background-light: #ffffff;
+$text-light: darken($text-dark, 30%);
+
+// Toggle button colors
+$toggle-dark: darken(#8fd3fe, 30%);
+$toggle-light: darken(#fff6a9, 30%);
+$toggle-icon: #ffffff; 
+$light-mode-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
 // Typography
 $font-primary: 'Quicksand', sans-serif;
@@ -10,3 +21,31 @@ $font-primary: 'Quicksand', sans-serif;
 $font-size-base: 1.2rem;
 $font-size-large: 1.5rem;   
 $font-size-xlarge: 3rem;
+
+// Mobile-nav - Dark mode
+$mobile-nav-bg: #8fd3fe;
+// Mobile-nav - Dark mode
+$mobile-nav-bg-light: #fff6a9;
+// Mobile-nav 
+$font-size-base-mobile: 1rem;
+$font-size-large-mobile: 1.2rem;
+$font-size-xlarge-mobile: 2rem;
+
+// Loading page - Dark mode
+$loading-bg-dark: #000000;
+$loading-text-light: #ffffff;
+// Loading page - Light mode
+$loading-bg-light: #ffffff;
+$loading-text-dark: #000000;
+
+// Preview specific tracks-button in home page
+// Gradient colors for buttons
+$btn-gradient: linear-gradient(0deg, #FF80AB 0%, #C2A2FF 100%);
+$btn-hover-color: #FF4F8A;
+$btn-text-color: #333333;
+$drop-shadow: 0px 4px 8px rgba(255, 0, 4, 0.25);
+$inner-shadow: inset 0px 5px 6px rgba(0, 0, 0, 0.25);
+
+// Search field background colors
+$search-bg-dark: #ffffff1a;
+$search-bg-light: #0000001a;
