@@ -1,5 +1,13 @@
 import "./cursor.js";
 
+// Loading screen is displayed until the page is loaded, then the main content is displayed.
+// Loading screen is displayed for 2 seconds before disappearing
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.querySelector(".loading-screen").style.display = "none";
+        document.querySelector(".main-content").style.display = "block";
+    }, 2000); 
+});
 
 // Fetching images and text from Spotify API to Display Artists, Songs & Albums in HTML
 async function displayTopArtists() {
@@ -7,7 +15,7 @@ async function displayTopArtists() {
 
     if (!artists || artists.length === 0) {
         console.error("Ingen artistdata hämtades!");
-        document.querySelector(".artist-container").innerHTML = "<p>Ingen artistdata tillgänglig</p>";
+        document.querySelector(".artist-container").innerHTML = "<p>No artist data available</p>";
         return;
     }
 
