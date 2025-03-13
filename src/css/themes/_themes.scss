@@ -1,0 +1,105 @@
+@use "../abstracts/variables";
+
+// Dark Mode (standard)
+.dark-mode {
+    background: variables.$background-dark;
+    color: variables.$text-dark;
+
+    .nav-links li a,
+    .nav-links span,
+    .subheading, 
+    .artist-container p, 
+    .search-container label,
+    .album-card p, 
+    .specific-track-songs p {
+        color: variables.$text-dark;
+    }
+
+    .search-container input {
+        background: variables.$search-bg-dark;
+    }
+
+    .theme-toggle i {
+        color: variables.$toggle-icon;
+    }
+
+    // Loading Page in Dark Mode
+    .loading-screen {
+        background: variables.$loading-bg-dark;
+        color: variables.$loading-text-light;
+    }
+
+    .bars__item {
+        background: variables.$text-dark;
+    }
+}
+
+// Light Mode
+.light-mode {
+    background: variables.$background-light;
+    color: variables.$text-light;
+
+    .nav-links li a,
+    .nav-links span,
+    .subheading, 
+    .artist-container p, 
+    .search-container label,
+    .album-card p, 
+    .specific-track-songs p {
+        color: variables.$text-light;
+    }
+
+    .search-container input {
+        background: variables.$search-bg-light;
+    }
+
+    .theme-toggle i {
+        color: variables.$toggle-icon;
+    }
+
+    // Loading Page in Light Mode
+    .loading-screen {
+        background: variables.$loading-bg-light;
+        color: variables.$loading-text-dark;
+    }
+
+    .bars__item {
+        background: variables.$text-light;
+    }
+}
+
+// Auto-adapt to system settings
+@media (prefers-color-scheme: light) {
+    body {
+        background: variables.$background-light;
+        color: variables.$text-light;
+    }
+
+    .nav-links li a,
+    .nav-links span,
+    .subheading, 
+    .artist-container p, 
+    .search-container label,
+    .album-card p, 
+    .specific-track-songs p {
+        color: variables.$text-light;
+    }
+
+    #theme-toggle i {
+        color: variables.$toggle-icon;
+    }
+
+    // Loading Page in auto-light mode
+    .loading-screen {
+        background: variables.$loading-bg-light;
+        color: variables.$text-light;
+    }
+
+    .bars__item {
+        background: variables.$text-light;
+    }
+
+    .mobile-nav {
+        background-color: variables.$mobile-nav-bg-light;
+    }
+}
