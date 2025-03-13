@@ -1,8 +1,12 @@
 @use "abstracts/variables";
 @use "abstracts/layout";
 @use "abstracts/mixins";
+@use "base/base";
 @use "components/cursor";
+@use "components/loading";
 @use "pages/index";
-@use "pages/footer";
+@use "pages/search";
 @use "layout/header";
+@use "layout/footer";
+@use "themes/themes";
 @use 'vendors/google-fonts';
