@@ -1,26 +1,32 @@
 @use "../abstracts/variables";
+@use "../base/base";
 .main-content {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center; 
 }
+
 
 .subheading {
   font-size: variables.$font-size-large;
-  color: variables.$text-color;
+  color: variables.$text-dark;
   margin-bottom: 1rem;
 }
 
 /* ARTIST SPOTLIGHT & HANDPICKED SONGS */
 .artist-spotlight,
-.specifik-track-songs {
+.specific-track-songs {
   margin-bottom: 6rem;
 
   .artist-container,
   .song-container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 4rem;
   }
 
@@ -41,7 +47,7 @@
     p {
       margin-top: 0.5rem;
       font-size: variables.$font-size-base;
-      color: variables.$text-color;
+      color: variables.$text-dark;
     }
   }
 }
@@ -50,7 +56,7 @@ h1 {
   font-size: variables.$font-size-xlarge;
 }
 
-.specifik-track-songs {
+.specific-track-songs {
   .song-container {
     flex-wrap: wrap;
   }
@@ -62,7 +68,6 @@ h1 {
 
 /* ALBUM SECTION */
 .albums {
-  padding: 2rem;
   text-align: center;
   margin-bottom: 10rem;
 
@@ -132,7 +137,30 @@ h1 {
     p {
       margin-top: 0.5rem;
       font-size: variables.$font-size-large;
-      color: variables.$text-color;
+      color: variables.$text-dark;
     }
   }
+}
+
+@media (max-width: 1000px) {
+    .main-content {
+        display: flex;
+        align-items: center; 
+        text-align: center; 
+    }
+
+    .artist-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 2rem;
+    }
+
+    .song-container {
+      padding: 1rem 2rem;
+    }
+
+    .artist-card img {
+        max-width: 150px; 
+    }
 }

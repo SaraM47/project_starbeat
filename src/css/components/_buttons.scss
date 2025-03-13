@@ -1,0 +1,77 @@
+@use "../abstracts/variables";
+
+.play-button,
+.pause-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: variables.$btn-text-color;
+    background: variables.$btn-gradient;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: variables.$drop-shadow, variables.$inner-shadow;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: variables.$btn-hover-color;
+    }
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: transform 0.2s ease-in-out;
+
+        i {
+            color: variables.$toggle-icon; // Vit ikon
+        }
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+
+
+// DARK MODE (Blue button with white icon)
+.dark-mode .theme-toggle button {
+    background-color: variables.$toggle-dark; 
+
+    i {
+        color: variables.$toggle-icon;
+    }
+}
+
+// LIGHT MODE (Yellow button with white icon)
+.light-mode .theme-toggle button {
+    background-color: variables.$toggle-light;
+    box-shadow: variables.$light-mode-shadow; 
+
+    i {
+        color: variables.$toggle-icon; 
+    }
+}
+
