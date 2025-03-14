@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./css/assets/images/musicnote-icon.png">
+    <link rel="icon" type="image/x-icon" href="./css/assets/images/musicnote-icon.ico">
+    <link rel="icon" type="image/svg+xml" href="./css/assets/images/musicnote-icon.svg">
+    <link rel="stylesheet" href="css/main.scss">
+    <script type="module" src="js/spotify.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/theme.js"></script>
+    <script type="module" src="js/search.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <picture>
+                        <source srcset="css/assets/images/logo-starbeat.png?as=webp&width=500" type="image/webp">
+                        <img src="css/assets/images/logo-starbeat.png" alt="StarBeat Logo">
+                    </picture>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><span>|</span></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><span>|</span></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+            <div class="search-container">
+                <label for="search" class="sr-only">Search</label>
+                <div class="search-wrapper">
+                    <input type="text" id="search" name="search" placeholder="Looking for a song?">
+                    <button type="submit" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>                
+            </div>
+            <!-- Standard icon for Dark Mode -->
+            <div class="theme-toggle">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i> 
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h1 class="search-title">Search results</h1>
+        <section class="search-results">
+           <!-- Dynamic content is created here via JavaScript -->
+        </section>
+    </main>
+
+    <footer class="mobile-nav">
+        <a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="search.html">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a href="playlist.html">
+            <i class="fas fa-folder"></i>
+            <span>Your playlist</span>
+        </a>
+        <a href="favorites.html">
+            <i class="fas fa-heart"></i>
+            <span>Liked songs</span>
+        </a>
+    </footer>
+</body>
+
+</html>
