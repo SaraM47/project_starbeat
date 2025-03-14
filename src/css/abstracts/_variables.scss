@@ -38,11 +38,12 @@ $loading-text-light: #ffffff;
 $loading-bg-light: #ffffff;
 $loading-text-dark: #000000;
 
-// Preview specific tracks-button in home page
 // Gradient colors for buttons
-$btn-gradient: linear-gradient(0deg, #FF80AB 0%, #C2A2FF 100%);
+$btn-gradient: linear-gradient(90deg, #FF80AB 0%, #C2A2FF 100%);
+// Hover effect for buttons
 $btn-hover-color: #FF4F8A;
 $btn-text-color: #333333;
+$btn-hover-text: #000000;
 $drop-shadow: 0px 4px 8px rgba(255, 0, 4, 0.25);
 $inner-shadow: inset 0px 5px 6px rgba(0, 0, 0, 0.25);
 
