@@ -32,6 +32,10 @@
     .bars__item {
         background: variables.$text-dark;
     }
+
+    .mobile-nav {
+        background-color: variables.$mobile-nav-bg; 
+    }
 }
 
 // Light Mode
@@ -65,6 +69,10 @@
 
     .bars__item {
         background: variables.$text-light;
+    }
+
+    .mobile-nav {
+        background-color: variables.$mobile-nav-bg-light; 
     }
 }
 
