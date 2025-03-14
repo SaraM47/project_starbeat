@@ -1,100 +1,94 @@
 import "./cursor.js";
 
-// Loading screen is displayed until the page is loaded, then the main content is displayed.
-// Loading screen is displayed for 2 seconds before disappearing
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        document.querySelector(".loading-screen").style.display = "none";
-        document.querySelector(".main-content").style.display = "block";
-    }, 2000); 
-});
+// Check if we are on the home page by looking for ".loading-screen"
+if (document.querySelector(".loading-screen")) {
+    // Loading screen is displayed for 2 seconds until the page is loaded, then the main content is displayed - only on the home page
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            const loadingScreen = document.querySelector(".loading-screen");
+            const mainContent = document.querySelector(".main-content");
 
-// Fetching images and text from Spotify API to Display Artists, Songs & Albums in HTML
-async function displayTopArtists() {
-    const artists = await window.getTopArtists();
+            if (loadingScreen && mainContent) {
+                loadingScreen.style.display = "none";
+                mainContent.style.display = "block";
+            }
+        }, 2000);
+    });
 
-    if (!artists || artists.length === 0) {
-        console.error("Ingen artistdata hämtades!");
-        document.querySelector(".artist-container").innerHTML = "<p>No artist data available</p>";
-        return;
+    // Function to display artists
+    async function displayTopArtists() {
+        const artistContainer = document.querySelector(".artist-container");
+        if (!artistContainer) {
+            console.warn("Artist-sektionen saknas.");
+            return;
+        }
+
+        const artists = await window.getTopArtists();
+        if (!artists || artists.length === 0) {
+            artistContainer.innerHTML = "<p>No artist data available</p>";
+            return;
+        }
+
+        artistContainer.innerHTML = "";
+        artists.forEach(artist => {
+            const artistCard = document.createElement("article");
+            artistCard.classList.add("artist-card");
+            artistCard.innerHTML = `
+                <img src="${artist.images[0]?.url || "assets/default.jpg"}" alt="${artist.name}">
+                <p>${artist.name}</p>
+            `;
+            artistContainer.appendChild(artistCard);
+        });
     }
 
-    const artistContainer = document.querySelector(".artist-container");
-    artistContainer.innerHTML = "";
+    // Function to display albums
+    async function displayAlbums() {
+        const albumWrapper = document.querySelector(".album-wrapper");
+        if (!albumWrapper) {
+            console.warn("Album-sektionen saknas.");
+            return;
+        }
 
-    artists.forEach(artist => {
-        const artistCard = document.createElement("article");
-        artistCard.classList.add("artist-card");
+        const albums = await window.getNewReleases();
+        albumWrapper.innerHTML = "";
 
-        const artistImg = document.createElement("img");
-        artistImg.src = artist.images[0]?.url || "assets/default.jpg";
-        artistImg.alt = artist.name;
-
-        const artistName = document.createElement("p");
-        artistName.textContent = artist.name;
-
-        artistCard.appendChild(artistImg);
-        artistCard.appendChild(artistName);
-        artistContainer.appendChild(artistCard);
-    });
-}
-
-async function displayAlbums() {
-    const albums = await window.getNewReleases();
-    const albumWrapper = document.querySelector(".album-wrapper");
-
-    albumWrapper.innerHTML = ""; 
-
-    // Limit to viewing 10 albums
-    albums.slice(0, 10).forEach((album, index) => {
-        const albumCard = document.createElement("div");
-        albumCard.classList.add("album-card");
-
-        const albumImg = document.createElement("img");
-        albumImg.src = album.images[0]?.url || "assets/default.jpg";
-        albumImg.alt = album.name;
-
-        const albumTitle = document.createElement("p");
-        albumTitle.textContent = album.name;
-
-        albumCard.appendChild(albumImg);
-        albumCard.appendChild(albumTitle);
-        albumWrapper.appendChild(albumCard);
-    });
-}
-
-async function displaySpecificTracks() {
-    const tracks = await getSpecificTracks(); 
-
-    const trackContainer = document.querySelector(".song-container");
-    trackContainer.innerHTML = "";
-
-    if (!tracks.length) {
-        trackContainer.innerHTML = "<p>Ingen låtdata tillgänglig</p>";
-        return;
+        albums.slice(0, 10).forEach(album => {
+            const albumCard = document.createElement("div");
+            albumCard.classList.add("album-card");
+            albumCard.innerHTML = `
+                <img src="${album.images[0]?.url || "assets/default.jpg"}" alt="${album.name}">
+                <p>${album.name}</p>
+            `;
+            albumWrapper.appendChild(albumCard);
+        });
     }
 
-    tracks.forEach(track => {
-        if (!track) return;
+    // Function to display specific songs
+    async function displaySpecificTracks() {
+        const trackContainer = document.querySelector(".song-container");
+        if (!trackContainer) {
+            console.warn("Track-sektionen saknas.");
+            return;
+        }
 
-        const trackElement = document.createElement("div");
-        trackElement.classList.add("song-card");
+        const tracks = await getSpecificTracks();
+        trackContainer.innerHTML = "";
 
-        // Get the album image, falling back to default if missing
-        const imageUrl = track.album?.images[0]?.url || "assets/default.jpg";
+        tracks.forEach(track => {
+            if (!track) return;
 
-        trackElement.innerHTML = `
-            <img src="${imageUrl}" alt="${track.name}">
-            <p><strong>${track.name}</strong> - ${track.artists.map(artist => artist.name).join(", ")}</p>
-        `;
+            const trackElement = document.createElement("div");
+            trackElement.classList.add("song-card");
+            trackElement.innerHTML = `
+                <img src="${track.album?.images[0]?.url || "assets/default.jpg"}" alt="${track.name}">
+                <p><strong>${track.name}</strong> - ${track.artists.map(artist => artist.name).join(", ")}</p>
+            `;
+            trackContainer.appendChild(trackElement);
+        });
+    }
 
-        trackContainer.appendChild(trackElement);
-    });
-}
-
-// Run the functions when the page loads
-window.onload = () => {
+    // Run the functions only on the home page
     displayTopArtists();
     displayAlbums();
     displaySpecificTracks();
-};
+}
