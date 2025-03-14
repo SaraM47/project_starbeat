@@ -1,0 +1,80 @@
+@use "../abstracts/variables";
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12ch;
+  justify-items: center;
+  padding: 20px;
+
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8ch;
+  }
+
+  @media (max-width: 768px) { 
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 6ch;
+  }
+}
+
+.search-item {
+  width: 20ch;
+  height: 24ch;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+
+  @media (max-width: 1024px) {
+    width: 20ch;
+  }
+
+  @media (max-width: 768px) {
+    width: 18ch;
+    padding-top: 2rem;
+  }
+}
+
+.search-item img {
+    width: 200px;
+    height: 200px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-bottom: 10px;
+
+  @media (max-width: 1024px) {
+    width: 180px;
+    height: 180px;
+  }
+
+  @media (max-width: 768px) {
+    width: 160px;
+    height: 160px;
+  }
+
+}
+
+.search-item:hover {
+  transform: scale(1.05);
+}
+
+.search-item a {
+  text-decoration: none;
+  color: variables.$btn-text-color;
+  background: variables.$btn-gradient;
+  border-radius: 40px;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+
+.search-item a:hover {
+    background: variables.$btn-hover-color;
+    color: variables.$btn-hover-text;
+    box-shadow: variables.$drop-shadow, variables.$inner-shadow;
+  }
