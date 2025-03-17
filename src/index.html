@@ -53,12 +53,12 @@
                     <button type="submit" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
-                </div>                
+                </div>
             </div>
             <!-- Standard icon for Dark Mode -->
             <div class="theme-toggle">
                 <button id="theme-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i> 
+                    <i class="fas fa-moon"></i>
                 </button>
             </div>
         </nav>
@@ -93,6 +93,42 @@
             </div>
         </section>
 
+        <button id="open-player" class="press-btn">
+            <i class="fa-regular fa-circle-play"></i> <span class="sr-only">Press to listen</span>
+        </button>
+
+        <!-- Popup Music Player -->
+        <div id="music-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <div class="music-player">
+                    <div class="gif-frame">
+                        <img src="css/assets/images/frog-listen-to-music.gif" alt="Frog vibing to the music with headphones">
+                    </div>
+                    <div class="song-info">
+                        <h3 id="song-title">Break Free</h3>
+                        <h3 id="artist-name">Ariana Grande</h3>
+                        <i class="fa-regular fa-heart like-btn"></i>
+                    </div>
+
+                    <!-- Progress bar with time indication -->
+                    <div class="progress-container">
+                        <label for="progress-bar" class="sr-only">Track progress</label>
+                        <input type="range" id="progress-bar" value="0">
+                    </div>
+
+                    <div class="controls">
+                        <i class="fa-solid fa-shuffle shuffle-btn"></i>
+                        <i class="fa-solid fa-backward-step prev-btn"></i>
+                        <i class="fa-solid fa-circle-play play-btn"></i>
+                        <i class="fa-solid fa-forward-step next-btn"></i>
+                        <i class="fa-solid fa-repeat repeat-btn"></i>
+                    </div>
+                    <div id="youtube-player"></div>
+                </div>
+            </div>
+        </div>
+
         <section class="wave-section">
             <div class="waves wavey1"></div>
             <div class="waves wavey2"></div>
@@ -110,15 +146,21 @@
             <i class="fas fa-search"></i>
             <span>Search</span>
         </a>
-        <a href="playlist.html">
+        <a href="explore.html">
             <i class="fas fa-folder"></i>
-            <span>Your playlist</span>
+            <span>Explore</span>
         </a>
         <a href="favorites.html">
             <i class="fas fa-heart"></i>
             <span>Liked songs</span>
         </a>
     </footer>
+
+    <!-- YouTube IFrame API  -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Music Player JavaScript -->
+    <script src="js/musicPlayer.js"></script>
 </body>
 
 </html>
