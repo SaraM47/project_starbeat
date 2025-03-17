@@ -41,21 +41,31 @@
                     <button type="submit" aria-label="Search">
                         <i class="fas fa-search"></i>
                     </button>
-                </div>                
+                </div>
             </div>
             <!-- Standard icon for Dark Mode -->
             <div class="theme-toggle">
                 <button id="theme-toggle" aria-label="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i> 
+                    <i class="fas fa-moon"></i>
                 </button>
             </div>
         </nav>
     </header>
 
     <main class="main-content">
+        <!-- Mobile Search (for mobile) -->
+        <div class="mobile-search-container">
+            <label for="mobile-search" class="sr-only">Search</label>
+            <div class="search-wrapper">
+                <input type="text" id="mobile-search" name="mobile-search" placeholder="Looking for a song?">
+                <button type="submit" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
         <h1 class="search-title">Search results</h1>
         <section class="search-results">
-           <!-- Dynamic content is created here via JavaScript -->
+            <!-- Dynamic content is created here via JavaScript -->
         </section>
 
         <section class="wave-section">
@@ -75,9 +85,9 @@
             <i class="fas fa-search"></i>
             <span>Search</span>
         </a>
-        <a href="playlist.html">
+        <a href="explore.html">
             <i class="fas fa-folder"></i>
-            <span>Your playlist</span>
+            <span>Explore</span>
         </a>
         <a href="favorites.html">
             <i class="fas fa-heart"></i>
