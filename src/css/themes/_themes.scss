@@ -1,6 +1,10 @@
 @use "../abstracts/variables";
 
 // Dark Mode (standard)
+%text-dark-theme {
+    color: variables.$text-dark;
+}
+
 .dark-mode {
     background: variables.$background-dark;
     color: variables.$text-dark;
@@ -12,7 +16,7 @@
     .search-container label,
     .album-card p, 
     .specific-track-songs p {
-        color: variables.$text-dark;
+        @extend %text-dark-theme;
     }
 
     .search-container input {
@@ -39,6 +43,10 @@
 }
 
 // Light Mode
+%text-light-theme {
+    color: variables.$text-light;
+}
+
 .light-mode {
     background: variables.$background-light;
     color: variables.$text-light;
@@ -50,12 +58,17 @@
     .search-container label,
     .album-card p, 
     .specific-track-songs p {
-        color: variables.$text-light;
+        @extend %text-light-theme;
     }
 
-    .search-container input {
+    %search-input {
         background: variables.$search-bg-light;
     }
+    
+    .search-container input, 
+    .mobile-search-container input {
+        @extend %search-input;
+    }    
 
     .theme-toggle i {
         color: variables.$toggle-icon;
