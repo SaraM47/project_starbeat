@@ -50,3 +50,35 @@ $inner-shadow: inset 0px 5px 6px rgba(0, 0, 0, 0.25);
 // Search field background colors
 $search-bg-dark: #ffffff1a;
 $search-bg-light: #0000001a;
+
+// Favorite button styling variables
+$favorite-icon-color: #ff4f8a; 
+$favorite-icon-hover: rgb(255, 69, 69); 
+$favorite-icon-active: red; 
+$favorite-icon-size: 1.5rem;
+
+// Favorites List Styling 
+$favorites-border-radius: 10px; 
+$favorites-padding: 15px;
+$favorites-hover-scale: 1.05;
+
+// Favorite Button 
+$favorite-btn-color: #ff4f8a; 
+$favorite-btn-hover: red; 
+$favorite-btn-size: 1.5rem; 
+
+// Image Styling
+$favorites-img-size: 80px;
+$favorites-img-border-radius: 5px;
+
+// Glow-effect for song-item in Explore-page     
+$box-shadow-popup-bg: rgba(0, 0, 0, 0.7);
+$box-shadow-default: 0 4px 10px rgba(255, 20, 147, 0.3), 
+                     0 0 15px rgba(255, 105, 180, 0.5);
+
+$box-shadow-hover: 0 6px 15px rgba(255, 20, 147, 0.5), 
+                   0 0 20px rgba(255, 105, 180, 0.8);
+
+// Press button in home page
+$press-btn-bg: #c2185b; 
+$press-btn-color: rgb(255, 255, 255); 
