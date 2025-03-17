@@ -15,10 +15,11 @@
     border-radius: 50px;
     cursor: pointer;
     box-shadow: variables.$drop-shadow, variables.$inner-shadow;
-    transition: all 0.3s ease-in-out;
 
     &:hover {
-        background-color: variables.$btn-hover-color;
+        background: variables.$btn-hover-color;
+        color: variables.$btn-hover-text;
+        box-shadow: variables.$drop-shadow, variables.$inner-shadow;
     }
 }
 
