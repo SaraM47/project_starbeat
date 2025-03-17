@@ -1,0 +1,134 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    const trendingContainer = document.querySelector(".trending-grid");
+    const artistContainer = document.querySelector(".artist-grid");
+    const genreContainer = document.querySelector(".genre-scroll");
+
+    // Get and render Trending
+    const trendingTracks = await window.getTrendingTracks();
+    trendingTracks.forEach(track => {
+        const trackElement = document.createElement("div");
+        trackElement.classList.add("trending-item");
+        trackElement.innerHTML = `
+            <figure class="trending-content">
+                <img src="${track.images[0]?.url || 'assets/default.jpg'}" alt="">
+                <figcaption>${track.name}</figcaption>
+            </figure>
+            <button class="play-button" data-url="${track.external_urls.spotify}" aria-label="Play ${track.name} on Spotify">
+                <i class="fas fa-play"></i>
+            </button>
+        `;
+        trendingContainer.appendChild(trackElement);
+    });
+
+    // Fetch and render more artists (Explore only)
+    const exploreArtists = await window.getExploreArtists();
+    exploreArtists.forEach(artist => {
+        const artistElement = document.createElement("div");
+        artistElement.classList.add("artist-item");
+        artistElement.innerHTML = `
+            <figure class="artist-content">
+                <img src="${artist.images[0]?.url || 'assets/default.jpg'}" alt="">
+                <figcaption>${artist.name}</figcaption>
+            </figure>
+        `;
+        artistElement.addEventListener("click", () => {
+            window.location.href = `artist.html?id=${artist.id}`;
+        });
+        artistContainer.appendChild(artistElement);
+    });
+
+    // Get and render Genres
+    const genres = await window.getGenres();
+    genres.forEach(genre => {
+        const genreElement = document.createElement("div");
+        genreElement.classList.add("genre-item");
+        genreElement.innerHTML = `
+        <figure class="genre-item">
+            <img src="${genre.icons[0]?.url || 'assets/default.jpg'}" alt="">
+            <figcaption>${genre.name}</figcaption>
+        </figure>
+        `;
+        genreContainer.appendChild(genreElement);
+    });
+
+    // Listen to songs
+    document.querySelectorAll(".play-button").forEach(button => {
+        button.addEventListener("click", () => {
+            window.open(button.dataset.url, "_blank");
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const youtubeSection = document.createElement("section");
+    youtubeSection.classList.add("youtube-player-section");
+    youtubeSection.innerHTML = `
+        <h2>Listen to their songs</h2>
+        <div id="youtube-player"></div>
+        <div class="player-controls">
+        <button id="play-btn"><i class="fas fa-play"></i> Play</button>
+        <button id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
+        <button id="stop-btn"><i class="fas fa-stop"></i> Stop</button>
+        </div>
+    `;
+
+    const artistSection = document.querySelector(".top-artists");
+    if (artistSection) {
+        artistSection.insertAdjacentElement("afterend", youtubeSection);
+    }
+
+    // Song list with YouTube Video ID
+    const songs = [
+        { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
+        { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
+        { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
+        { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
+        { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
+        { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
+        { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
+        { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
+    ];
+
+    const songList = document.createElement("div");
+    songList.classList.add("song-list");
+
+    songs.forEach(song => {
+        const songItem = document.createElement("div");
+        songItem.classList.add("song-item");
+        songItem.innerHTML = `
+            <p><strong>${song.title}</strong> - ${song.artist}</p>
+            <button class="play-song" data-video-id="${song.videoId}">▶ Play</button>
+        `;
+        songList.appendChild(songItem);
+    });
+
+    youtubeSection.appendChild(songList);
+
+    document.addEventListener("click", (event) => {
+        if (event.target.closest(".play-song")) {
+            const videoId = event.target.closest(".play-song").dataset.videoId;
+            playYouTubeVideo(videoId); 
+        }
+    });
+
+    // Control buttons for the YouTube player
+    const playBtn = document.getElementById("play-btn");
+    const pauseBtn = document.getElementById("pause-btn");
+    const stopBtn = document.getElementById("stop-btn");
+
+    if (playBtn && pauseBtn && stopBtn) {
+        playBtn.addEventListener("click", () => {
+            if (player) player.playVideo();
+        });
+
+        pauseBtn.addEventListener("click", () => {
+            if (player) player.pauseVideo();
+        });
+
+        stopBtn.addEventListener("click", () => {
+            if (player) player.stopVideo();
+        });
+    } else {
+        console.error("Player control buttons not found!");
+    }
+});
