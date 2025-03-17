@@ -9,7 +9,6 @@ document.addEventListener("mousemove", (e) => {
     // Random color from the list
     let randomColor = colors[Math.floor(Math.random() * colors.length)];
     note.style.color = randomColor;
-    note.style.textShadow = `0 0 5px ${randomColor}, 0 0 10px ${randomColor}`;
 
     // Random rotation angle (-360 to 360 degrees)
     let randomRotation = Math.floor(Math.random() * 720) - 360;
