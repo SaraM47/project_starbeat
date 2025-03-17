@@ -1,0 +1,36 @@
+@use "../abstracts/variables";
+@use "../components/buttons";
+
+@mixin search-container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: auto;
+    position: relative;
+}
+
+@mixin search-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+@mixin search-input {
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border: none;
+    border-radius: 20px;
+    background: variables.$search-bg-dark;
+    color: variables.$text-dark;
+    outline: none;
+    width: 16ch;
+}
+
+@mixin search-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: variables.$text-dark;
+    cursor: pointer;
+    font-size: 1rem;
+}
