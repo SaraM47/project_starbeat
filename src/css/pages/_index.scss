@@ -6,10 +6,9 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  text-align: center; 
+  align-items: center;
+  text-align: center;
 }
-
 
 .subheading {
   font-size: variables.$font-size-large;
@@ -81,7 +80,7 @@ h1 {
   .album-wrapper {
     position: relative;
     width: 100%;
-    height: 200px; 
+    height: 200px;
     mask-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 0),
@@ -94,7 +93,7 @@ h1 {
   .album-container {
     display: flex;
     flex-wrap: nowrap;
-    gap: 2rem; 
+    gap: 2rem;
     animation: scrollLeft 30s linear infinite;
   }
 
@@ -115,7 +114,7 @@ h1 {
     animation-iteration-count: infinite;
   }
 
-    // Dynamic delay for album cards
+  // Dynamic delay for album cards
   @for $i from 1 through 10 {
     .album-card:nth-child(#{$i}) {
       animation-delay: calc(30s / 10 * (30 - #{$i}) * -1);
@@ -143,24 +142,165 @@ h1 {
 }
 
 @media (max-width: 1000px) {
-    .main-content {
-        display: flex;
-        align-items: center; 
-        text-align: center; 
+  .main-content {
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .artist-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+  }
+
+  .song-container {
+    padding: 1rem 2rem;
+  }
+
+  .artist-card img {
+    max-width: 150px;
+  }
+}
+
+.press-btn {
+  position: fixed;
+  bottom: 5rem; 
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: variables.$press-btn-bg;
+  color: variables.$press-btn-color;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+  margin-bottom: 1.2rem;
+  z-index: 1100;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: darken(variables.$favorite-icon-color, 10%);
+  }
+
+  i {
+    font-size: 2rem;
+  }
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: variables.$box-shadow-popup-bg;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  .popup-content {
+    background: variables.$primary-gradient;
+    padding: 6ch;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 50ch;
+    text-align: center;
+    position: relative;
+
+    .close-btn {
+      position: absolute;
+      top: -0.5rem;
+      right: 15px;
+      font-size: 3rem;
+      cursor: pointer;
+      color: variables.$background-dark;
     }
 
-    .artist-container {
+    .music-player {
+      .gif-frame {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+      }
+
+      img {
+        width: 50%;
+        height: auto;
+      }
+
+      .song-info {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        gap: 0.3rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: variables.$background-dark;
+        font-size: 1.2rem;
+
+        #artist-name {
+          font-size: 1.2rem; 
+          margin-top: -1rem;
+        }
+
+        .artist-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          font-size: 1.2rem;
+        }
+
+        .like-btn {
+          font-size: 2.5rem;
+          cursor: pointer;
+          margin-left: auto; 
+        }
+      }
+
+      .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1rem;
+        color: variables.$favorite-icon-color;
+        margin-bottom: 0.5rem;
         gap: 1rem;
-        padding: 1rem 2rem;
-    }
+      }
 
-    .song-container {
-      padding: 1rem 2rem;
-    }
+      #progress-bar {
+        width: 100%;
+        appearance: none;
+        background: variables.$background-dark;
+        border-radius: 10px;
+        height: 5px;
+        cursor: pointer;
+      }
 
-    .artist-card img {
-        max-width: 150px; 
+      .controls {
+        display: flex;
+        justify-content: space-around;
+        font-size: 2rem;
+        margin-top: 2rem;
+        cursor: pointer;
+        color: variables.$background-dark;
+
+        i {
+          transition: transform 0.3s ease-in-out;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
     }
+  }
 }
