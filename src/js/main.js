@@ -57,7 +57,7 @@ if (document.querySelector(".loading-screen")) {
             albumCard.classList.add("album-card");
             albumCard.innerHTML = `
                 <img src="${album.images[0]?.url || "assets/default.jpg"}" alt="${album.name}">
-                <p>${album.name}</p>
+                <h3>${album.name}</h3>
             `;
             albumWrapper.appendChild(albumCard);
         });
