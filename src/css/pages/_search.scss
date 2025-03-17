@@ -1,12 +1,12 @@
 @use "../abstracts/variables";
+@use "../abstracts/mixins";
 
 .search-results {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12ch;
   justify-items: center;
-  padding: 20px;
-
+  padding: 1.25rem 1.25rem 18rem 1.25rem;
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
@@ -78,3 +78,52 @@
     color: variables.$btn-hover-text;
     box-shadow: variables.$drop-shadow, variables.$inner-shadow;
   }
+
+  // Heart icon styling
+  .favorite-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: variables.$favorite-icon-size;
+    color: variables.$favorite-icon-color;
+    transition: color 0.3s;
+
+    &:hover {
+        color: variables.$favorite-icon-hover;
+    }
+
+    &.favorited {
+        color: variables.$favorite-icon-active;
+    }
+}
+
+.mobile-search-container {
+  display: none; // Hides as standard
+
+  @media (max-width: 1000px) {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+
+      @media (max-width: 1000px) {
+        .search-wrapper {
+            @include mixins.search-wrapper;
+        }
+
+        input {
+            @include mixins.search-input;
+        }
+
+        button {
+            @include mixins.search-button;
+        }
+    }
+  }
+}
+
+// Hide the search field in the navbar in mobile mode
+@media (max-width: 1000px) {
+  .search-container {
+      display: none !important;
+  }
+}
