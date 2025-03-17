@@ -1,4 +1,5 @@
 @use "../abstracts/variables";
+@use "../abstracts/mixins";
 @use "../components/buttons";
 
 .navbar {
@@ -46,37 +47,19 @@
     }
 
     .search-container {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0; 
-        margin-left: auto; 
-        position: relative;
-    }
+        @include mixins.search-container;
 
     .search-wrapper {
-        display: flex;
-        align-items: center;
-        position: relative;
+        @include mixins.search-wrapper;
     }
 
-    .search-container input {
-        padding: 0.5rem 2.5rem 0.5rem 1rem; 
-        border: none;
-        border-radius: 20px;
-        background: variables.$search-bg-dark;
-        color: variables.$text-dark;
-        outline: none;
-        width: 16ch;
+    input {
+        @include mixins.search-input;
     }
 
-    .search-container button {
-        position: absolute;
-        right: 10px;
-        background: none;
-        border: none;
-        color: variables.$text-dark;
-        cursor: pointer;
-        font-size: 1rem;
+    button {
+        @include mixins.search-button;
+    }
     }
 
     .theme-toggle {
@@ -89,7 +72,7 @@
 @media (max-width: 1000px) {
     h1 {
         font-size: variables.$font-size-xlarge-mobile;
-        margin-top: 6rem;
+        margin-top: 4rem;
     }
 
     h2 {
