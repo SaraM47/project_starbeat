@@ -1,9 +1,19 @@
+/**
+ * Handles fetching and rendering content for the Explore page.
+ * It loads trending tracks, artists, genres, and integrates a YouTube player.
+ * This function is executed when the DOM has fully loaded.
+ * @async
+ * @returns {void}
+ */
 document.addEventListener("DOMContentLoaded", async () => {
     const trendingContainer = document.querySelector(".trending-grid");
     const artistContainer = document.querySelector(".artist-grid");
     const genreContainer = document.querySelector(".genre-scroll");
 
-    // Get and render Trending
+    /**
+     * Fetch and render trending songs.
+     * @type {Array<Object>}
+     */
     const trendingTracks = await window.getTrendingTracks();
     trendingTracks.forEach(track => {
         const trackElement = document.createElement("div");
@@ -20,7 +30,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         trendingContainer.appendChild(trackElement);
     });
 
-    // Fetch and render more artists (Explore only)
+    /**
+     * Fetch and render artists in the Explore section.
+     * @type {Array<Object>}
+     */
     const exploreArtists = await window.getExploreArtists();
     exploreArtists.forEach(artist => {
         const artistElement = document.createElement("div");
@@ -37,7 +50,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         artistContainer.appendChild(artistElement);
     });
 
-    // Get and render Genres
+    /**
+     * Fetch and render music genres.
+     * @type {Array<Object>}
+     */
     const genres = await window.getGenres();
     genres.forEach(genre => {
         const genreElement = document.createElement("div");
@@ -59,6 +75,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
+/**
+ * Initializes the YouTube player section and adds song list functionality.
+ * @returns {void}
+ */
 document.addEventListener("DOMContentLoaded", () => {
     const youtubeSection = document.createElement("section");
     youtubeSection.classList.add("youtube-player-section");
@@ -77,7 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
         artistSection.insertAdjacentElement("afterend", youtubeSection);
     }
 
-    // Song list with YouTube Video ID
+     /**
+     * Song list with YouTube Video IDs.
+     * @type {Array<Object>}
+     */
     const songs = [
         { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
         { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },

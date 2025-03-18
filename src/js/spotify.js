@@ -1,5 +1,7 @@
-// This file is for to handle API calls only
-
+/**
+ * This file handles API calls to Spotify.
+ * It fetches data such as access tokens, artists, tracks, albums, and genres.
+ */
 // Import dotenv to read from .env
 if (typeof process !== "undefined") {
     require('dotenv').config();
@@ -9,8 +11,11 @@ if (typeof process !== "undefined") {
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-// Uses client_credentials grant type to get an access token.
-// Returns token to use in API calls.
+/**
+ * Fetches an access token from Spotify API using client credentials.
+ *
+ * @returns {Promise<string>} A promise that resolves to an access token.
+ */
 async function getAccessToken() {
     const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
@@ -24,7 +29,11 @@ async function getAccessToken() {
     return data.access_token;
 }
 
-// Function that retrieves top lists of artists.
+/**
+ * Fetches details of top artists using their Spotify IDs.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of artist objects.
+ */
 window.getTopArtists = async function () {
     const token = await getAccessToken();
     const response = await fetch("https://api.spotify.com/v1/artists?ids=06HL4z0CvFAxyc27GXpf02,1Xyo4u8uXC1ZmMpatF05PJ,4q3ewBCX7sLwd24euuV69X", {
@@ -38,7 +47,11 @@ window.getTopArtists = async function () {
     return data.artists || []; 
 };
 
-// Fetch specific tracks from the Spotify API using their track IDs
+/**
+ * Fetches details of specific tracks using their Spotify IDs.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of track objects.
+ */
 async function getSpecificTracks() {
     const token = await getAccessToken();
     const trackIds = "2plbrEY59IikOBgBGLjaoe,4wJ5Qq0jBN4ajy7ouZIV1c,6AI3ezQ4o3HUoP6Dhudph3"; // Specific track IDs
@@ -56,7 +69,11 @@ async function getSpecificTracks() {
 
 window.getSpecificTracks = getSpecificTracks;
 
-// Function that retrieves new album releases.
+/**
+ * Fetches the latest new album releases from Spotify.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of album objects.
+ */
 window.getNewReleases = async function () {
     const token = await getAccessToken();
     const response = await fetch("https://api.spotify.com/v1/browse/new-releases", {
@@ -70,7 +87,11 @@ window.getNewReleases = async function () {
     return data.albums.items || [];
 }
 
-// Function to get a list of multiple artists dynamically for Explore page
+/**
+ * Fetches a list of multiple artists for the Explore page.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of artist objects.
+ */
 window.getExploreArtists = async function () {
     const token = await getAccessToken();
     
@@ -88,7 +109,11 @@ window.getExploreArtists = async function () {
     return data.artists || []; 
 };
 
-// Function to get trending songs & albums
+/**
+ * Fetches trending songs and albums from Spotify.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of trending album objects.
+ */
 window.getTrendingTracks = async function () {
     const token = await getAccessToken();
     const response = await fetch("https://api.spotify.com/v1/browse/new-releases?limit=10", {
@@ -99,7 +124,11 @@ window.getTrendingTracks = async function () {
     return data.albums.items;
 };
 
-// Function to get available genres
+/**
+ * Fetches available genres from Spotify.
+ *
+ * @returns {Promise<Object[]>} A promise that resolves to an array of genre objects.
+ */
 window.getGenres = async function () {
     const token = await getAccessToken();
     const response = await fetch("https://api.spotify.com/v1/browse/categories?limit=10&locale=en_US", {
@@ -111,7 +140,12 @@ window.getGenres = async function () {
  
 };
 
-// Function to search for artists, albums and songs via Spotify API
+/**
+ * Searches for tracks, artists, and albums based on a given query.
+ *
+ * @param {string} query - The search query entered by the user.
+ * @returns {Promise<Object>} A promise that resolves to the search results.
+ */
 async function searchSpotify(query) {
     const token = await getAccessToken();
     const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track,artist,album&limit=10`, {

@@ -1,5 +1,13 @@
+/**
+ * Global variable for the YouTube Player instance.
+ * @type {YT.Player | null}
+ */
 let player;
 
+/**
+ * Initializes the YouTube IFrame API and creates the player.
+ * This function is called automatically by the YouTube API.
+ */
 function onYouTubeIframeAPIReady() {
     player = new YT.Player("youtube-player", {
         height: "360",
@@ -13,9 +21,16 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+/**
+ * Loads and plays a specific YouTube video in the existing player.
+ * 
+ * @param {string} videoId - The unique ID of the YouTube video to play.
+ * @example
+ * playYouTubeVideo("2Ek3WMM7I-0"); // Plays Ariana Grande - Break Free
+ */
 function playYouTubeVideo(videoId) {
     if (player) {
-        player.loadVideoById(videoId); // Play the video in the existing player
+        player.loadVideoById(videoId); 
     } else {
         console.error("YouTube player is not ready.");
     }

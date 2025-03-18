@@ -1,8 +1,19 @@
+/**
+ * Runs when the DOM is fully loaded and updates the favorites page.
+ */
 document.addEventListener("DOMContentLoaded", () => {
     updateFavoritesPage();
 });
 
-// Function to update and display favorites
+/**
+ * Updates and displays the favorites list on the page.
+ * Retrieves favorites from local storage and dynamically populates the UI.
+ * 
+ * @returns {void} This function does not return anything but updates the UI dynamically.
+ * @example
+ * // Call function to refresh the favorites section
+ * updateFavoritesPage();
+ */
 function updateFavoritesPage() {
     const favoritesContainer = document.querySelector(".favorites-list");
     if (!favoritesContainer) {
@@ -12,6 +23,13 @@ function updateFavoritesPage() {
 
     favoritesContainer.innerHTML = ""; 
 
+    /**
+     * @type {Array<Object>} favorites - List of favorite items stored in localStorage.
+     * @property {string} favorites[].id - The unique identifier of the favorite item.
+     * @property {string} favorites[].title - The title of the favorite item.
+     * @property {string} favorites[].artist - The artist name associated with the favorite item.
+     * @property {string} [favorites[].image] - The image URL of the favorite item (optional).
+     */
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     if (favorites.length === 0) {
@@ -38,18 +56,23 @@ function updateFavoritesPage() {
         favoritesContainer.appendChild(favoriteElement);
     });
 
-    // Event listener for removing favorites
+    // Event listener for removing favorites by remove buttons
     document.querySelectorAll(".remove-favorite").forEach(button => {
         button.addEventListener("click", (e) => {
             removeFromFavorites(e.currentTarget.dataset.id);
-            updateFavoritesPage(); // Update the list after deletion
+            updateFavoritesPage(); // Update the list after deletion - refresh the list after removal
         });
     });
 }
 
-// Function to remove a favorite from Local Storage
+/**
+ * Removes a favorite item from local storage based on its ID.
+ * 
+ * @param {string} id - The unique ID of the item to be removed.
+ * @returns {void} This function does not return anything but updates localStorage.
+ */
 function removeFromFavorites(id) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    favorites = favorites.filter(item => item.id !== id);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+    favorites = favorites.filter(item => item.id !== id); // Filter out the removed item
+    localStorage.setItem("favorites", JSON.stringify(favorites)); // Update local storage
 }

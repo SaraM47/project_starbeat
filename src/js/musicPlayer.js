@@ -1,3 +1,7 @@
+/**
+ * Music Player Module
+ * Handles the YouTube music player inside the popup, allowing play, pause, and looping functionality.
+ */
 let player;
 let isPlaying = false;
 let progressBar = document.getElementById("progress-bar");
@@ -14,19 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtn = document.querySelector(".close-btn");
     const playBtn = document.querySelector(".play-btn");
 
-    // Open popup and start YouTube player if it is not already there
+    /**
+     * Opens the music player popup and initializes YouTube player if not already loaded.
+     */
     openBtn.addEventListener("click", () => {
         popup.style.display = "flex";
         if (!player) loadYouTubePlayer();
     });
 
-    // Close popup
+     /**
+     * Closes the music player popup and pauses video playback.
+     */
     closeBtn.addEventListener("click", () => {
         popup.style.display = "none";
         if (player) player.pauseVideo();
     });
 
-    // Player controls
+    /**
+     * Toggles play/pause for the YouTube video when clicking the play button.
+     *
+     * @param {Event} event - The click event triggered when the play button is clicked.
+     */
     playBtn.addEventListener("click", () => {
         if (isPlaying) {
             player.pauseVideo();
@@ -38,6 +50,11 @@ document.addEventListener("DOMContentLoaded", () => {
         isPlaying = !isPlaying;
     });
 
+    /**
+     * Seeks the video to the selected time within the allowed range (0:49 - 1:12).
+     *
+     * @param {Event} event - The input event from the progress bar.
+     */
     progressBar.addEventListener("input", () => {
         if (player) {
             const seekTime = (progressBar.value / 100) * (73 - 49) + 49; // Keep it within 0:49 - 1:12
@@ -46,7 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// YouTube API Setup
+/**
+ * Initializes the YouTube IFrame API Player when the API is ready.
+ */
 function onYouTubeIframeAPIReady() {
     if (!document.getElementById("youtube-player")) {
         console.error("YouTube player element not found!");
@@ -64,6 +83,12 @@ function onYouTubeIframeAPIReady() {
             end: 73, // End at 1:12
             modestbranding: 1
         },
+         /**
+         * Event listener for player state changes.
+         *
+         * @param {Object} event - The event object from the YouTube API.
+         * @param {number} event.data - The current state of the player.
+         */
         events: {
             onStateChange: function (event) {
                 if (event.data === YT.PlayerState.PLAYING) {
@@ -75,7 +100,9 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// Loop function to force YouTube to stay between 0:49 - 1:12
+/**
+ * Ensures the video loops between 0:49 - 1:12 by checking the current time every second.
+ */
 function checkLoop() {
     setInterval(() => {
         if (player && player.getCurrentTime() >= 73) {
@@ -84,7 +111,9 @@ function checkLoop() {
     }, 1000); // Checks every second
 }
 
-// Update progress bar & time
+/**
+ * Updates the progress bar and time display while the video is playing.
+ */
 function updateProgressBar() {
     setInterval(() => {
         if (player && player.getDuration) {
@@ -100,14 +129,21 @@ function updateProgressBar() {
     }, 1000);
 }
 
-// Format time to mm:ss
+/**
+ * Formats time in mm:ss format.
+ *
+ * @param {number} seconds - Time in seconds.
+ * @returns {string} Formatted time in mm:ss format.
+ */
 function formatTime(seconds) {
     let min = Math.floor(seconds / 60);
     let sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? "0" : ""}${sec}`;
 }
 
-// Load the YouTube player if needed
+/**
+ * Loads the YouTube player if it's not already initialized.
+ */
 function loadYouTubePlayer() {
     if (!player) {
         onYouTubeIframeAPIReady();

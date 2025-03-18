@@ -28,6 +28,9 @@ if (searchInput && searchButton) {
         searchSpotify(query).then(displaySearchResults);
     }
 
+    /**
+     * Performs a search and updates the search results.
+     */
     function performSearch() {
         const desktopQuery = searchInput ? searchInput.value.trim() : "";
         const mobileQuery = mobileSearchInput ? mobileSearchInput.value.trim() : "";
@@ -86,7 +89,12 @@ if (searchInput && searchButton) {
     });
 });
 
-// Function for managing favorites
+/**
+ * Toggles the favorite status of a song/artist/album and updates local storage.
+ *
+ * @param {Object} item - The item to be favorited/unfavorited.
+ * @param {HTMLElement} button - The button element triggering the event.
+ */
 function toggleFavorite(item, button) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -110,7 +118,12 @@ function toggleFavorite(item, button) {
     localStorage.setItem("favorites", JSON.stringify(favorites));
 }
 
-// Function to create favorite button
+/**
+ * Creates a favorite button for an item.
+ *
+ * @param {Object} item - The item data containing ID, title, artist, and image.
+ * @returns {string} - A string representing the button's HTML.
+ */
 function createFavoriteButton(item) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     let isFavorited = favorites.some(fav => fav.id === item.id);
@@ -124,7 +137,11 @@ function createFavoriteButton(item) {
             </button>`;
 }
 
-// Function to display search results
+/**
+ * Displays search results from the Spotify API.
+ *
+ * @param {Object} data - The data returned from the API.
+ */
 function displaySearchResults(data) {
     const resultsContainer = document.querySelector(".search-results");
     if (!resultsContainer) {

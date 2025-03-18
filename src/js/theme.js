@@ -1,8 +1,20 @@
+/**
+ * Theme-related elements.
+ * @property {HTMLElement} themeToggle - The theme toggle button element.
+ * @property {HTMLElement} body - The body element of the document.
+ * @property {HTMLElement} themeIcon - The theme icon inside the toggle button.
+ */
 const themeToggle = document.getElementById("theme-toggle");
 const body = document.body;
 const themeIcon = themeToggle.querySelector("i");
 
-// Function to update the theme
+/**
+ * Updates the theme of the website.
+ * Removes any existing theme classes and applies the new theme.
+ * Saves the theme in local storage.
+ *
+ * @param {string} theme - The new theme to be applied ("light-mode" or "dark-mode").
+ */
 function updateTheme(theme) {
     body.classList.remove("light-mode", "dark-mode");
     body.classList.add(theme);
@@ -10,12 +22,19 @@ function updateTheme(theme) {
     localStorage.setItem("theme", theme);
 }
 
-// Function to update the icon
+/**
+ * Updates the theme toggle icon based on the current theme.
+ *
+ * @param {string} theme - The current theme ("light-mode" or "dark-mode").
+ */
 function updateThemeIcon(theme) {
     themeIcon.classList = theme === "light-mode" ? "fas fa-sun" : "fas fa-moon";
 }
 
-// Check if the user has saved a theme
+/**
+ * Retrieves the saved theme from local storage.
+ * If no saved theme is found, it follows the system's preferred theme.
+ */
 const savedTheme = localStorage.getItem("theme");
 
 if (savedTheme) {
@@ -27,14 +46,19 @@ if (savedTheme) {
     updateThemeIcon(prefersLight ? "light-mode" : "dark-mode");
 }
 
-// Listen for changes in the system color theme
+/**
+ * Listens for changes in the system color scheme and updates the theme accordingly.
+ * This only applies if the user has not manually selected a theme.
+ */
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
     if (!localStorage.getItem("theme")) { // Only if the user has not selected manually
         updateTheme(e.matches ? "dark-mode" : "light-mode");
     }
 });
 
-// Switch theme manually with the button
+/**
+ * Toggles the theme manually when the user clicks the theme toggle button.
+ */
 themeToggle.addEventListener("click", () => {
     const newTheme = body.classList.contains("light-mode") ? "dark-mode" : "light-mode";
     updateTheme(newTheme);
