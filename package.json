@@ -11,10 +11,14 @@
   "description": "",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.13.3",
+    "jsdoc": "^4.0.4",
     "parcel": "^2.13.3",
     "process": "^0.11.10",
     "sharp": "^0.33.5"
   },
-  "browserslist": ["> 0.5%", "last 2 versions", "not dead"
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
   ]
 }
