@@ -1,6 +1,6 @@
 # StarBeat
 
-**StarBeat** is an interactive music web app where users can explore songs, artists, and genres through integrations with various APIs. The project is a responsive and stylish web application with animations and an engaging design.
+**StarBeat** is an interactive music web application that allows users to explore songs, artists, and genres through integrations with various APIs. The project is a responsive and stylish web application with animations and an engaging design.
 
 ## Features
 
@@ -14,7 +14,7 @@
 
 - **HTML, CSS, SCSS**: Structured and responsive layout.
 - **JavaScript (vanilla JS, AJAX)**: Dynamic content and API calls.
-- **YouTube IFrame API**: To play songs directly in the app.
+- **YouTube IFrame API**: Play songs directly in the application.
 - **Spotify API**: Fetching artist and song data.
 - **Git & GitHub**: Version control and deployment.
 
