@@ -26,13 +26,11 @@
    ```
 2. **Install dependencies**
    ```sh
-   npm init 
-   npm install parcel --save-dev
+   npm install
    ```
 3. **Start the development server**
    ```sh
-   npm run start
-   ```
+   npm run dev
 4. **Open your browser**
    ```sh
    http://localhost:1234
