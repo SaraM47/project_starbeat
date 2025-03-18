@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: spotify.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: spotify.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This file handles API calls to Spotify.
+ * It fetches data such as access tokens, artists, tracks, albums, and genres.
+ */
+// Import dotenv to read from .env
+if (typeof process !== "undefined") {
+    require('dotenv').config();
+}
+
+// Get API keys from environment variables
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+
+/**
+ * Fetches an access token from Spotify API using client credentials.
+ *
+ * @returns {Promise&lt;string>} A promise that resolves to an access token.
+ */
+async function getAccessToken() {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `grant_type=client_credentials&amp;client_id=${clientId}&amp;client_secret=${clientSecret}`
+    });
+
+    const data = await response.json();
+    return data.access_token;
+}
+
+/**
+ * Fetches details of top artists using their Spotify IDs.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of artist objects.
+ */
+window.getTopArtists = async function () {
+    const token = await getAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/artists?ids=06HL4z0CvFAxyc27GXpf02,1Xyo4u8uXC1ZmMpatF05PJ,4q3ewBCX7sLwd24euuV69X", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    return data.artists || []; 
+};
+
+/**
+ * Fetches details of specific tracks using their Spotify IDs.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of track objects.
+ */
+async function getSpecificTracks() {
+    const token = await getAccessToken();
+    const trackIds = "2plbrEY59IikOBgBGLjaoe,4wJ5Qq0jBN4ajy7ouZIV1c,6AI3ezQ4o3HUoP6Dhudph3"; // Specific track IDs
+
+    const response = await fetch(`https://api.spotify.com/v1/tracks?ids=${trackIds}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    return data.tracks || [];
+}
+
+window.getSpecificTracks = getSpecificTracks;
+
+/**
+ * Fetches the latest new album releases from Spotify.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of album objects.
+ */
+window.getNewReleases = async function () {
+    const token = await getAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/browse/new-releases", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    return data.albums.items || [];
+}
+
+/**
+ * Fetches a list of multiple artists for the Explore page.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of artist objects.
+ */
+window.getExploreArtists = async function () {
+    const token = await getAccessToken();
+    
+    // More artist IDs list for Explore view
+    const artistIds = "5pKCCKE2ajJHZ9KAiaK11H,3Nrfpe0tUJi4K4DXYWgMUX,66CXWjxzNUsdJxJ2JdwvnR,7bXgB6jMjp9ATFy66eO08Z,1uNFoZAHBGtllmzznpCI3s,0EmeFodog0BfCgMzAIvKQp,0du5cEVh5yTK9QJze8zA0C,6eUKZXaKkcviH0Ku9w2n3V,3wcj11K77LjEY1PkEazffa,3q7HBObVc0L8jNeTe5Gofh,4gzpq5DPGxSnKTe4SA8HAU,69GGBxA162lTqCwzJG5jLp,246dkjvS1zLTtiykXe5h60,6M2wZ9GZgrQXHCFfjv46we"; 
+
+    const response = await fetch(`https://api.spotify.com/v1/artists?ids=${artistIds}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    return data.artists || []; 
+};
+
+/**
+ * Fetches trending songs and albums from Spotify.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of trending album objects.
+ */
+window.getTrendingTracks = async function () {
+    const token = await getAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/browse/new-releases?limit=10", {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    const data = await response.json();
+    return data.albums.items;
+};
+
+/**
+ * Fetches available genres from Spotify.
+ *
+ * @returns {Promise&lt;Object[]>} A promise that resolves to an array of genre objects.
+ */
+window.getGenres = async function () {
+    const token = await getAccessToken();
+    const response = await fetch("https://api.spotify.com/v1/browse/categories?limit=10&amp;locale=en_US", {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    const data = await response.json();
+    return data.categories.items; // Returns the entire genre object
+ 
+};
+
+/**
+ * Searches for tracks, artists, and albums based on a given query.
+ *
+ * @param {string} query - The search query entered by the user.
+ * @returns {Promise&lt;Object>} A promise that resolves to the search results.
+ */
+async function searchSpotify(query) {
+    const token = await getAccessToken();
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&amp;type=track,artist,album&amp;limit=10`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    return response.json();
+}
+
+// Make the function globally accessible
+window.searchSpotify = searchSpotify;
+
+window.getAccessToken = getAccessToken;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:54:53 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

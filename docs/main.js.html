@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./cursor.js";
+
+/**
+ * Checks if the current page is the home page by looking for the `.loading-screen` element.
+ * If found, it initializes the loading screen effect and fetches data for artists, albums, and songs.
+ */
+if (document.querySelector(".loading-screen")) {
+    /**
+     * Displays a loading screen for 2 seconds before showing the main content.
+     * This is only applied on the home page.
+     *
+     * @event load - Triggered when the page finishes loading.
+     */
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            const loadingScreen = document.querySelector(".loading-screen");
+            const mainContent = document.querySelector(".main-content");
+
+            if (loadingScreen &amp;&amp; mainContent) {
+                loadingScreen.style.display = "none";
+                mainContent.style.display = "block";
+            }
+        }, 2000);
+    });
+
+     /**
+     * Fetches and displays a list of top artists on the home page.
+     * If the artist section does not exist, a warning is logged.
+     * If no artist data is available, a fallback message is displayed.
+     *
+     * @async
+     * @function displayTopArtists
+     * @returns {Promise&lt;void>} - Updates the artist container with artist cards.
+     */
+    async function displayTopArtists() {
+        const artistContainer = document.querySelector(".artist-container");
+        if (!artistContainer) {
+            console.warn("Artist-sektionen saknas.");
+            return;
+        }
+
+        const artists = await window.getTopArtists();
+        if (!artists || artists.length === 0) {
+            artistContainer.innerHTML = "&lt;p>No artist data available&lt;/p>";
+            return;
+        }
+
+        artistContainer.innerHTML = "";
+        artists.forEach(artist => {
+            const artistCard = document.createElement("article");
+            artistCard.classList.add("artist-card");
+            artistCard.innerHTML = `
+                &lt;img src="${artist.images[0]?.url || "assets/default.jpg"}" alt="${artist.name}">
+                &lt;p>${artist.name}&lt;/p>
+            `;
+            artistContainer.appendChild(artistCard);
+        });
+    }
+
+    /**
+     * Fetches and displays a list of new album releases on the home page.
+     * If the album section does not exist, a warning is logged.
+     *
+     * @async
+     * @function displayAlbums
+     * @returns {Promise&lt;void>} - Updates the album wrapper with album cards.
+     */
+    async function displayAlbums() {
+        const albumWrapper = document.querySelector(".album-wrapper");
+        if (!albumWrapper) {
+            console.warn("Album-sektionen saknas.");
+            return;
+        }
+
+        const albums = await window.getNewReleases();
+        albumWrapper.innerHTML = "";
+
+        albums.slice(0, 10).forEach(album => {
+            const albumCard = document.createElement("div");
+            albumCard.classList.add("album-card");
+            albumCard.innerHTML = `
+                &lt;img src="${album.images[0]?.url || "assets/default.jpg"}" alt="${album.name}">
+                &lt;h3>${album.name}&lt;/h3>
+            `;
+            albumWrapper.appendChild(albumCard);
+        });
+    }
+
+    /**
+     * Fetches and displays a list of specific tracks on the home page.
+     * If the track section does not exist, a warning is logged.
+     *
+     * @async
+     * @function displaySpecificTracks
+     * @returns {Promise&lt;void>} - Updates the track container with track cards.
+     */
+    async function displaySpecificTracks() {
+        const trackContainer = document.querySelector(".song-container");
+        if (!trackContainer) {
+            console.warn("Track-sektionen saknas.");
+            return;
+        }
+
+        const tracks = await getSpecificTracks();
+        trackContainer.innerHTML = "";
+
+        tracks.forEach(track => {
+            if (!track) return;
+
+            const trackElement = document.createElement("div");
+            trackElement.classList.add("song-card");
+            trackElement.innerHTML = `
+                &lt;img src="${track.album?.images[0]?.url || "assets/default.jpg"}" alt="${track.name}">
+                &lt;p>&lt;strong>${track.name}&lt;/strong> - ${track.artists.map(artist => artist.name).join(", ")}&lt;/p>
+            `;
+            trackContainer.appendChild(trackElement);
+        });
+    }
+
+    // Run the functions only on the home page
+    displayTopArtists();
+    displayAlbums();
+    displaySpecificTracks();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:54:53 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

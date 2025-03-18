@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: theme.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: theme.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Theme-related elements.
+ * @property {HTMLElement} themeToggle - The theme toggle button element.
+ * @property {HTMLElement} body - The body element of the document.
+ * @property {HTMLElement} themeIcon - The theme icon inside the toggle button.
+ */
+const themeToggle = document.getElementById("theme-toggle");
+const body = document.body;
+const themeIcon = themeToggle.querySelector("i");
+
+/**
+ * Updates the theme of the website.
+ * Removes any existing theme classes and applies the new theme.
+ * Saves the theme in local storage.
+ *
+ * @param {string} theme - The new theme to be applied ("light-mode" or "dark-mode").
+ */
+function updateTheme(theme) {
+    body.classList.remove("light-mode", "dark-mode");
+    body.classList.add(theme);
+    updateThemeIcon(theme);
+    localStorage.setItem("theme", theme);
+}
+
+/**
+ * Updates the theme toggle icon based on the current theme.
+ *
+ * @param {string} theme - The current theme ("light-mode" or "dark-mode").
+ */
+function updateThemeIcon(theme) {
+    themeIcon.classList = theme === "light-mode" ? "fas fa-sun" : "fas fa-moon";
+}
+
+/**
+ * Retrieves the saved theme from local storage.
+ * If no saved theme is found, it follows the system's preferred theme.
+ */
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme) {
+    updateTheme(savedTheme);
+} else {
+    // If no saved theme, follow system setting
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    body.classList.add(prefersLight ? "light-mode" : "dark-mode");
+    updateThemeIcon(prefersLight ? "light-mode" : "dark-mode");
+}
+
+/**
+ * Listens for changes in the system color scheme and updates the theme accordingly.
+ * This only applies if the user has not manually selected a theme.
+ */
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+    if (!localStorage.getItem("theme")) { // Only if the user has not selected manually
+        updateTheme(e.matches ? "dark-mode" : "light-mode");
+    }
+});
+
+/**
+ * Toggles the theme manually when the user clicks the theme toggle button.
+ */
+themeToggle.addEventListener("click", () => {
+    const newTheme = body.classList.contains("light-mode") ? "dark-mode" : "light-mode";
+    updateTheme(newTheme);
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:54:53 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

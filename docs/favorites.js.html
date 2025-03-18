@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: favorites.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: favorites.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Runs when the DOM is fully loaded and updates the favorites page.
+ */
+document.addEventListener("DOMContentLoaded", () => {
+    updateFavoritesPage();
+});
+
+/**
+ * Updates and displays the favorites list on the page.
+ * Retrieves favorites from local storage and dynamically populates the UI.
+ * 
+ * @returns {void} This function does not return anything but updates the UI dynamically.
+ * @example
+ * // Call function to refresh the favorites section
+ * updateFavoritesPage();
+ */
+function updateFavoritesPage() {
+    const favoritesContainer = document.querySelector(".favorites-list");
+    if (!favoritesContainer) {
+        console.warn("No .favorites-list-sektion found. Interrupts...");
+        return;
+    }
+
+    favoritesContainer.innerHTML = ""; 
+
+    /**
+     * @type {Array&lt;Object>} favorites - List of favorite items stored in localStorage.
+     * @property {string} favorites[].id - The unique identifier of the favorite item.
+     * @property {string} favorites[].title - The title of the favorite item.
+     * @property {string} favorites[].artist - The artist name associated with the favorite item.
+     * @property {string} [favorites[].image] - The image URL of the favorite item (optional).
+     */
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    if (favorites.length === 0) {
+        favoritesContainer.innerHTML = "&lt;p>No favorites have been added yet.&lt;/p>";
+        return;
+    }
+
+    favorites.forEach(item => {
+        const favoriteElement = document.createElement("div");
+        favoriteElement.classList.add("favorite-item");
+
+        favoriteElement.innerHTML = `
+            &lt;img src="${item.image || 'assets/default.jpg'}" alt="${item.title}">
+            &lt;div class="favorite-info">
+            &lt;h2 class="title">${item.title}&lt;/h2>
+            &lt;p class="artist">${item.artist}&lt;/p>
+            &lt;/div>
+            &lt;button class="remove-favorite" data-id="${item.id}" aria-label="Remove ${item.title} from favorites">
+            &lt;i class="fas fa-heart-broken">&lt;/i>
+            &lt;span class="sr-only">Remove ${item.title} from favorites&lt;/span>
+            &lt;/button>
+            `;
+
+        favoritesContainer.appendChild(favoriteElement);
+    });
+
+    // Event listener for removing favorites by remove buttons
+    document.querySelectorAll(".remove-favorite").forEach(button => {
+        button.addEventListener("click", (e) => {
+            removeFromFavorites(e.currentTarget.dataset.id);
+            updateFavoritesPage(); // Update the list after deletion - refresh the list after removal
+        });
+    });
+}
+
+/**
+ * Removes a favorite item from local storage based on its ID.
+ * 
+ * @param {string} id - The unique ID of the item to be removed.
+ * @returns {void} This function does not return anything but updates localStorage.
+ */
+function removeFromFavorites(id) {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    favorites = favorites.filter(item => item.id !== id); // Filter out the removed item
+    localStorage.setItem("favorites", JSON.stringify(favorites)); // Update local storage
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 18 2025 11:54:53 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
