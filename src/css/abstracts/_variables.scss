@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Primary colors for the color palette
 $primary-gradient: linear-gradient(to bottom right, #ffb6c1, #d8b2ff, #8fd3fe, #fff6a9);
 // Standard by defualt - Dark mode
@@ -6,11 +8,11 @@ $text-dark: #ff80ab;
 
 // Light Mode
 $background-light: #ffffff;
-$text-light: darken($text-dark, 30%);
+$text-light: color.adjust($text-dark, $lightness: -30%);
 
 // Toggle button colors
-$toggle-dark: darken(#8fd3fe, 30%);
-$toggle-light: darken(#fff6a9, 30%);
+$toggle-dark: color.adjust(#8fd3fe, $lightness: -30%);
+$toggle-light: color.adjust(#fff6a9, $lightness: -30%);
 $toggle-icon: #ffffff; 
 $light-mode-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
