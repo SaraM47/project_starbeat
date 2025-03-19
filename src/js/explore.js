@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             </figure>
         `;
         artistElement.addEventListener("click", () => {
-            window.location.href = `artist.html?id=${artist.id}`;
+            window.open(`https://open.spotify.com/artist/${artist.id}`, "_blank");
         });
         artistContainer.appendChild(artistElement);
     });
