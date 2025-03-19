@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         songItem.classList.add("song-item");
         songItem.innerHTML = `
             <p><strong>${song.title}</strong> - ${song.artist}</p>
-            <button class="play-song" data-video-id="${song.videoId}">▶ Play</button>
+            <button class="play-song" data-video-id="${song.videoId}"><i class="fas fa-play"></i> Play</button>
         `;
         songList.appendChild(songItem);
     });

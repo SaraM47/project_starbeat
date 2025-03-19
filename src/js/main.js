@@ -86,7 +86,7 @@ if (document.querySelector(".loading-screen")) {
         });
     }
 
-    /**
+       /**
      * Fetches and displays a list of specific tracks on the home page.
      * If the track section does not exist, a warning is logged.
      *
