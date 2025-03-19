@@ -51,13 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /**
-     * Seeks the video to the selected time within the allowed range (0:49 - 1:12).
+     * Seeks the video to the selected time within the allowed range (0:35 - 1:12).
      *
      * @param {Event} event - The input event from the progress bar.
      */
     progressBar.addEventListener("input", () => {
         if (player) {
-            const seekTime = (progressBar.value / 100) * (73 - 49) + 49; // Keep it within 0:49 - 1:12
+            const seekTime = (progressBar.value / 100) * (73 - 38) + 38; // Keep it within 0:35 - 1:12
             player.seekTo(seekTime, true);
         }
     });
@@ -79,7 +79,7 @@ function onYouTubeIframeAPIReady() {
         playerVars: {
             autoplay: 0,
             controls: 0,
-            start: 49, // Start at 0:49
+            start: 38, // Start at 0:35
             end: 73, // End at 1:12
             modestbranding: 1
         },
@@ -101,12 +101,12 @@ function onYouTubeIframeAPIReady() {
 }
 
 /**
- * Ensures the video loops between 0:49 - 1:12 by checking the current time every second.
+ * Ensures the video loops between 0:35 - 1:12 by checking the current time every second.
  */
 function checkLoop() {
     setInterval(() => {
         if (player && player.getCurrentTime() >= 73) {
-            player.seekTo(49, true); // Jump back to 0:49
+            player.seekTo(38, true); // Jump back to 0:35
         }
     }, 1000); // Checks every second
 }
@@ -118,13 +118,13 @@ function updateProgressBar() {
     setInterval(() => {
         if (player && player.getDuration) {
             const currentTime = player.getCurrentTime();
-            const duration = 73 - 49; // Only the clip 0:49 - 1:12
+            const duration = 73 - 38; // Only the clip 0:49 - 1:12
 
-            progressBar.value = ((currentTime - 49) / duration) * 100; // Calculate the correct percentage
+            progressBar.value = ((currentTime - 38) / duration) * 100; // Calculate the correct percentage
 
             // Formatera tid (mm:ss)
-            currentTimeDisplay.innerText = formatTime(currentTime - 49); // Show time from 0:00
-            durationDisplay.innerText = formatTime(duration); // Show total time as 0:23
+            currentTimeDisplay.innerText = formatTime(currentTime - 38); // Show time from 0:00
+            durationDisplay.innerText = formatTime(duration); // Show total time as 0:35
         }
     }, 1000);
 }
