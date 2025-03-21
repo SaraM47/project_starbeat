@@ -54,4 +54,9 @@ async function playYouTubeVideo(videoId) {
     }
 }
 
+function getYouTubePlayer() {
+    return player;
+}
+
 window.playYouTubeVideo = playYouTubeVideo;
+window.getYouTubePlayer = getYouTubePlayer;
