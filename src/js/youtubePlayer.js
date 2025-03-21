@@ -21,6 +21,8 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
 /**
  * Loads and plays a specific YouTube video in the existing player.
  * 
@@ -38,4 +40,4 @@ function playYouTubeVideo(videoId) {
 }
 
 // Function globally accessible for YouTube API
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+window.playYouTubeVideo = playYouTubeVideo;
