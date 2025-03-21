@@ -3,25 +3,32 @@
  * @type {YT.Player | null}
  */
 let player;
+let onPlayerReadyCallbacks = [];
 
 /**
  * Initializes the YouTube IFrame API and creates the player.
  * This function is called automatically by the YouTube API.
  */
-function onYouTubeIframeAPIReady() {
+window.onYouTubeIframeAPIReady = function () {
     player = new YT.Player("youtube-player", {
         height: "360",
         width: "640",
-        videoId: "", // No video is loaded initially
+        videoId: "", // No video initially
         playerVars: {
             autoplay: 0,
             controls: 1,
             modestbranding: 1,
+        },
+        events: {
+            onReady: () => {
+                console.log("YouTube Player is ready");
+                // Kör alla sparade callbacks
+                onPlayerReadyCallbacks.forEach(cb => cb());
+                onPlayerReadyCallbacks = [];
+            }
         }
     });
-}
-
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+};
 
 /**
  * Loads and plays a specific YouTube video in the existing player.
