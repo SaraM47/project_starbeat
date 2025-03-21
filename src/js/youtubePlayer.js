@@ -35,3 +35,6 @@ function playYouTubeVideo(videoId) {
         console.error("YouTube player is not ready.");
     }
 }
+
+// Function globally accessible for YouTube API
+window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
