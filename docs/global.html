@@ -230,6 +230,7 @@ Handles the YouTube music player inside the popup, allowing play, pause, and loo
 
 <div class="description">
     Global variable for the YouTube Player instance.
+Initialized by the YouTube IFrame API when ready.
 </div>
 
 
@@ -280,7 +281,80 @@ Handles the YouTube music player inside the popup, allowing play, pause, and loo
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line5">line 5</a>
+        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="playerReadyResolve"><span class="type-signature"></span>playerReadyResolve<span class="type-signature"> :Promise.&lt;void></span></h4>
+
+
+
+
+<div class="description">
+    Promise that resolves when the YouTube player is ready.
+Used to delay actions until the player is initialized.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Promise.&lt;void></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -1628,6 +1702,119 @@ If no artist data is available, a fallback message is displayed.
     
 
     
+    <h4 class="name" id="getYouTubePlayer"><span class="type-signature"></span>getYouTubePlayer<span class="signature">()</span><span class="type-signature"> &rarr; {YT.Player|null}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns the initialized YouTube player instance.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The YouTube player instance or null if not yet initialized.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">YT.Player</span>
+|
+
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="loadYouTubePlayer"><span class="type-signature"></span>loadYouTubePlayer<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -1804,7 +1991,7 @@ If no artist data is available, a fallback message is displayed.
     
 
     
-    <h4 class="name" id="onYouTubeIframeAPIReady"><span class="type-signature"></span>onYouTubeIframeAPIReady<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="playYouTubeVideo"><span class="type-signature">(async) </span>playYouTubeVideo<span class="signature">(videoId)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1812,96 +1999,7 @@ If no artist data is available, a fallback message is displayed.
 
 
 <div class="description">
-    Initializes the YouTube IFrame API and creates the player.
-This function is called automatically by the YouTube API.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line11">line 11</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="playYouTubeVideo"><span class="type-signature"></span>playYouTubeVideo<span class="signature">(videoId)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Loads and plays a specific YouTube video in the existing player.
+    Loads and plays a specific YouTube video once the player is ready.
 </div>
 
 
@@ -1994,7 +2092,7 @@ This function is called automatically by the YouTube API.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line31">line 31</a>
+        <a href="youtubePlayer.js.html">youtubePlayer.js</a>, <a href="youtubePlayer.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -2989,143 +3087,6 @@ Saves the theme in local storage.
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id="waitForPlayer"><span class="type-signature"></span>waitForPlayer<span class="signature">(videoId)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Waits for the YouTube player to be ready before playing video.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>videoId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">YouTube video ID to load</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="explore.js.html">explore.js</a>, <a href="explore.js.html#line163">line 163</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     
@@ -3378,13 +3339,13 @@ Randomly selects a note symbol and color, animates it, and removes it after 1 se
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li><li><a href="global.html#waitForPlayer">waitForPlayer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#getYouTubePlayer">getYouTubePlayer</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#playerReadyResolve">playerReadyResolve</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 12:28:26 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 16:04:20 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

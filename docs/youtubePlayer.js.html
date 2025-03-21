@@ -28,42 +28,82 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * Global variable for the YouTube Player instance.
+ * Initialized by the YouTube IFrame API when ready.
  * @type {YT.Player | null}
  */
 let player;
 
 /**
- * Initializes the YouTube IFrame API and creates the player.
- * This function is called automatically by the YouTube API.
+ * Promise that resolves when the YouTube player is ready.
+ * Used to delay actions until the player is initialized.
+ * @type {Promise&lt;void>}
  */
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player("youtube-player", {
+let playerReadyResolve;
+const playerReady = new Promise(resolve => {
+    playerReadyResolve = resolve;
+});
+
+/**
+ * Called automatically by the YouTube IFrame API once it's loaded.
+ * Initializes the YouTube Player and resolves the `playerReady` Promise.
+ */
+window.onYouTubeIframeAPIReady = function () {
+    const container = document.getElementById("youtube-player");
+    if (!container) {
+        console.warn("#youtube-player not found on this page");
+        return;
+    }
+
+    player = new YT.Player(container, {
         height: "360",
         width: "640",
-        videoId: "", // No video is loaded initially
+        videoId: "",
         playerVars: {
             autoplay: 0,
             controls: 1,
             modestbranding: 1,
+        },
+        events: {
+            onReady: () => {
+                console.log("YouTube Player is ready");
+                playerReadyResolve(); 
+            }
         }
     });
-}
+};
 
 /**
- * Loads and plays a specific YouTube video in the existing player.
- * 
+ * Loads and plays a specific YouTube video once the player is ready.
+ *
+ * @async
+ * @function
  * @param {string} videoId - The unique ID of the YouTube video to play.
  * @example
  * playYouTubeVideo("2Ek3WMM7I-0"); // Plays Ariana Grande - Break Free
  */
-function playYouTubeVideo(videoId) {
-    if (player) {
-        player.loadVideoById(videoId); 
+
+async function playYouTubeVideo(videoId) {
+    await playerReady; 
+    if (player &amp;&amp; typeof player.loadVideoById === "function") {
+        console.log("Playing video:", videoId);
+        player.loadVideoById(videoId);
     } else {
-        console.error("YouTube player is not ready.");
+        console.error(" Player is still not valid after ready");
     }
 }
-</code></pre>
+
+/**
+ * Returns the initialized YouTube player instance.
+ *
+ * @function
+ * @returns {YT.Player | null} The YouTube player instance or null if not yet initialized.
+ */
+function getYouTubePlayer() {
+    return player;
+}
+
+window.playYouTubeVideo = playYouTubeVideo;
+window.getYouTubePlayer = getYouTubePlayer;</code></pre>
         </article>
     </section>
 
@@ -73,13 +113,13 @@ function playYouTubeVideo(videoId) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li><li><a href="global.html#waitForPlayer">waitForPlayer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#getYouTubePlayer">getYouTubePlayer</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#playerReadyResolve">playerReadyResolve</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 12:28:26 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 16:04:20 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

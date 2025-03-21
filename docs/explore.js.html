@@ -108,94 +108,95 @@ document.addEventListener("DOMContentLoaded", async () => {
  * @returns {void}
  */
 document.addEventListener("DOMContentLoaded", () => {
-    const youtubeSection = document.createElement("section");
-    youtubeSection.classList.add("youtube-player-section");
-    youtubeSection.innerHTML = `
-        &lt;h2>Listen to their songs&lt;/h2>
-        &lt;div id="youtube-player">&lt;/div>
-        &lt;div class="player-controls">
-        &lt;button id="play-btn">&lt;i class="fas fa-play">&lt;/i> Play&lt;/button>
-        &lt;button id="pause-btn">&lt;i class="fas fa-pause">&lt;/i> Pause&lt;/button>
-        &lt;button id="stop-btn">&lt;i class="fas fa-stop">&lt;/i> Stop&lt;/button>
-        &lt;/div>
-    `;
-
-    const artistSection = document.querySelector(".top-artists");
-    if (artistSection) {
-        artistSection.insertAdjacentElement("afterend", youtubeSection);
-    }
-
-     /**
-     * Song list with YouTube Video IDs.
-     * @type {Array&lt;Object>}
-     */
-    const songs = [
-        { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
-        { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
-        { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
-        { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
-        { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
-        { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
-        { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
-        { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
-    ];
-
-    const songList = document.createElement("div");
-    songList.classList.add("song-list");
-
-    songs.forEach(song => {
-        const songItem = document.createElement("div");
-        songItem.classList.add("song-item");
-        songItem.innerHTML = `
-            &lt;p>&lt;strong>${song.title}&lt;/strong> - ${song.artist}&lt;/p>
-            &lt;button class="play-song" data-video-id="${song.videoId}">&lt;i class="fas fa-play">&lt;/i> Play&lt;/button>
+    function initYouTubeSection() {
+        const youtubeSection = document.createElement("section");
+        youtubeSection.classList.add("youtube-player-section");
+        youtubeSection.innerHTML = `
+            &lt;h2>Listen to their songs&lt;/h2>
+            &lt;div id="youtube-player">&lt;/div>
+            &lt;div class="player-controls">
+            &lt;button id="play-btn">&lt;i class="fas fa-play">&lt;/i> Play&lt;/button>
+            &lt;button id="pause-btn">&lt;i class="fas fa-pause">&lt;/i> Pause&lt;/button>
+            &lt;button id="stop-btn">&lt;i class="fas fa-stop">&lt;/i> Stop&lt;/button>
+            &lt;/div>
         `;
-        songList.appendChild(songItem);
-    });
 
-    youtubeSection.appendChild(songList);
-
-    document.addEventListener("click", (event) => {
-        if (event.target.closest(".play-song")) {
-            const videoId = event.target.closest(".play-song").dataset.videoId;
-            waitForPlayer(videoId);
+        const artistSection = document.querySelector(".top-artists");
+        if (artistSection) {
+            artistSection.insertAdjacentElement("afterend", youtubeSection);
         }
-    });
 
-    // Control buttons for the YouTube player
-    const playBtn = document.getElementById("play-btn");
-    const pauseBtn = document.getElementById("pause-btn");
-    const stopBtn = document.getElementById("stop-btn");
+        /**
+        * Song list with YouTube Video IDs.
+        * @type {Array&lt;Object>}
+        */    
+        const songs = [
+            { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
+            { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
+            { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
+            { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
+            { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
+            { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
+            { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
+            { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
+        ];
 
-    if (playBtn &amp;&amp; pauseBtn &amp;&amp; stopBtn) {
-        playBtn.addEventListener("click", () => {
-            if (player) player.playVideo();
+        const songList = document.createElement("div");
+        songList.classList.add("song-list");
+
+        songs.forEach(song => {
+            const songItem = document.createElement("div");
+            songItem.classList.add("song-item");
+            songItem.innerHTML = `
+                &lt;p>&lt;strong>${song.title}&lt;/strong> - ${song.artist}&lt;/p>
+                &lt;button class="play-song" data-video-id="${song.videoId}">
+                    &lt;i class="fas fa-play">&lt;/i> Play
+                &lt;/button>
+            `;
+            songList.appendChild(songItem);
         });
 
-        pauseBtn.addEventListener("click", () => {
-            if (player) player.pauseVideo();
+        youtubeSection.appendChild(songList);
+
+        document.addEventListener("click", (event) => {
+            if (event.target.closest(".play-song")) {
+                const videoId = event.target.closest(".play-song").dataset.videoId;
+                window.playYouTubeVideo(videoId);
+            }
         });
 
-        stopBtn.addEventListener("click", () => {
-            if (player) player.stopVideo();
+        // Control buttons for the YouTube player
+        const playBtn = document.getElementById("play-btn");
+        const pauseBtn = document.getElementById("pause-btn");
+        const stopBtn = document.getElementById("stop-btn");
+
+        playBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.playVideo();
         });
-    } else {
-        console.error("Player control buttons not found!");
+
+        pauseBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.pauseVideo();
+        });
+
+        stopBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.stopVideo();
+        });
     }
+
+    // Wait for iframe API to load and init UI
+    setTimeout(() => {
+        if (typeof YT !== "undefined" &amp;&amp; typeof YT.Player !== "undefined") {
+            initYouTubeSection();
+        } else {
+            console.warn("Waiting for YouTube IFrame API...");
+            setTimeout(() => location.reload(), 1000); // This is a fallback: reload once
+        }
+    }, 300); // Small delay to ensure DOM and YouTube API loaded
 });
-
-/**
- * Waits for the YouTube player to be ready before playing video.
- * @param {string} videoId - YouTube video ID to load
- */
-function waitForPlayer(videoId) {
-    if (window.player &amp;&amp; typeof player.loadVideoById === "function") {
-        player.loadVideoById(videoId);
-    } else {
-        console.warn("YouTube player is not ready yet... retrying");
-        setTimeout(() => waitForPlayer(videoId), 500);
-    }
-}</code></pre>
+</code></pre>
         </article>
     </section>
 
@@ -205,13 +206,13 @@ function waitForPlayer(videoId) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li><li><a href="global.html#waitForPlayer">waitForPlayer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Events</h3><ul><li><a href="global.html#event:load-Triggeredwhenthepagefinishesloading.">load - Triggered when the page finishes loading.</a></li><li><a href="global.html#event:mousemove-Triggeredwhentheusermovesthemouse.">mousemove - Triggered when the user moves the mouse.</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkLoop">checkLoop</a></li><li><a href="global.html#createFavoriteButton">createFavoriteButton</a></li><li><a href="global.html#displayAlbums">displayAlbums</a></li><li><a href="global.html#displaySearchResults">displaySearchResults</a></li><li><a href="global.html#displaySpecificTracks">displaySpecificTracks</a></li><li><a href="global.html#displayTopArtists">displayTopArtists</a></li><li><a href="global.html#events">events</a></li><li><a href="global.html#formatTime">formatTime</a></li><li><a href="global.html#getAccessToken">getAccessToken</a></li><li><a href="global.html#getSpecificTracks">getSpecificTracks</a></li><li><a href="global.html#getYouTubePlayer">getYouTubePlayer</a></li><li><a href="global.html#loadYouTubePlayer">loadYouTubePlayer</a></li><li><a href="global.html#onYouTubeIframeAPIReady">onYouTubeIframeAPIReady</a></li><li><a href="global.html#playYouTubeVideo">playYouTubeVideo</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#playerReadyResolve">playerReadyResolve</a></li><li><a href="global.html#removeFromFavorites">removeFromFavorites</a></li><li><a href="global.html#savedTheme">savedTheme</a></li><li><a href="global.html#searchSpotify">searchSpotify</a></li><li><a href="global.html#themeToggle">themeToggle</a></li><li><a href="global.html#toggleFavorite">toggleFavorite</a></li><li><a href="global.html#updateFavoritesPage">updateFavoritesPage</a></li><li><a href="global.html#updateProgressBar">updateProgressBar</a></li><li><a href="global.html#updateTheme">updateTheme</a></li><li><a href="global.html#updateThemeIcon">updateThemeIcon</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 12:28:26 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 16:04:20 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
