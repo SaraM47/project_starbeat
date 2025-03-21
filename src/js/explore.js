@@ -80,78 +80,90 @@ document.addEventListener("DOMContentLoaded", async () => {
  * @returns {void}
  */
 document.addEventListener("DOMContentLoaded", () => {
-    const youtubeSection = document.createElement("section");
-    youtubeSection.classList.add("youtube-player-section");
-    youtubeSection.innerHTML = `
-        <h2>Listen to their songs</h2>
-        <div id="youtube-player"></div>
-        <div class="player-controls">
-        <button id="play-btn"><i class="fas fa-play"></i> Play</button>
-        <button id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
-        <button id="stop-btn"><i class="fas fa-stop"></i> Stop</button>
-        </div>
-    `;
-
-    const artistSection = document.querySelector(".top-artists");
-    if (artistSection) {
-        artistSection.insertAdjacentElement("afterend", youtubeSection);
-    }
-
-     /**
-     * Song list with YouTube Video IDs.
-     * @type {Array<Object>}
-     */
-    const songs = [
-        { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
-        { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
-        { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
-        { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
-        { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
-        { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
-        { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
-        { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
-    ];
-
-    const songList = document.createElement("div");
-    songList.classList.add("song-list");
-
-    songs.forEach(song => {
-        const songItem = document.createElement("div");
-        songItem.classList.add("song-item");
-        songItem.innerHTML = `
-            <p><strong>${song.title}</strong> - ${song.artist}</p>
-            <button class="play-song" data-video-id="${song.videoId}"><i class="fas fa-play"></i> Play</button>
+    function initYouTubeSection() {
+        const youtubeSection = document.createElement("section");
+        youtubeSection.classList.add("youtube-player-section");
+        youtubeSection.innerHTML = `
+            <h2>Listen to their songs</h2>
+            <div id="youtube-player"></div>
+            <div class="player-controls">
+            <button id="play-btn"><i class="fas fa-play"></i> Play</button>
+            <button id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
+            <button id="stop-btn"><i class="fas fa-stop"></i> Stop</button>
+            </div>
         `;
-        songList.appendChild(songItem);
-    });
 
-    youtubeSection.appendChild(songList);
-
-    document.addEventListener("click", (event) => {
-        if (event.target.closest(".play-song")) {
-            const videoId = event.target.closest(".play-song").dataset.videoId;
-            playYouTubeVideo(videoId); 
+        const artistSection = document.querySelector(".top-artists");
+        if (artistSection) {
+            artistSection.insertAdjacentElement("afterend", youtubeSection);
         }
-    });
 
-    // Control buttons for the YouTube player
-    const playBtn = document.getElementById("play-btn");
-    const pauseBtn = document.getElementById("pause-btn");
-    const stopBtn = document.getElementById("stop-btn");
+        /**
+        * Song list with YouTube Video IDs.
+        * @type {Array<Object>}
+        */    
+        const songs = [
+            { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
+            { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
+            { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
+            { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
+            { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
+            { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
+            { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
+            { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
+        ];
 
-    if (playBtn && pauseBtn && stopBtn) {
-        playBtn.addEventListener("click", () => {
-            if (player) player.playVideo();
+        const songList = document.createElement("div");
+        songList.classList.add("song-list");
+
+        songs.forEach(song => {
+            const songItem = document.createElement("div");
+            songItem.classList.add("song-item");
+            songItem.innerHTML = `
+                <p><strong>${song.title}</strong> - ${song.artist}</p>
+                <button class="play-song" data-video-id="${song.videoId}">
+                    <i class="fas fa-play"></i> Play
+                </button>
+            `;
+            songList.appendChild(songItem);
         });
 
-        pauseBtn.addEventListener("click", () => {
-            if (player) player.pauseVideo();
+        youtubeSection.appendChild(songList);
+
+        document.addEventListener("click", (event) => {
+            if (event.target.closest(".play-song")) {
+                const videoId = event.target.closest(".play-song").dataset.videoId;
+                window.playYouTubeVideo(videoId);
+            }
         });
 
-        stopBtn.addEventListener("click", () => {
-            if (player) player.stopVideo();
+        const playBtn = document.getElementById("play-btn");
+        const pauseBtn = document.getElementById("pause-btn");
+        const stopBtn = document.getElementById("stop-btn");
+
+        playBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.playVideo();
         });
-    } else {
-        console.error("Player control buttons not found!");
+
+        pauseBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.pauseVideo();
+        });
+
+        stopBtn?.addEventListener("click", () => {
+            const yt = window.getYouTubePlayer();
+            yt?.stopVideo();
+        });
     }
+
+    // Wait for iframe API to load and init UI
+    setTimeout(() => {
+        if (typeof YT !== "undefined" && typeof YT.Player !== "undefined") {
+            initYouTubeSection();
+        } else {
+            console.warn("Waiting for YouTube IFrame API...");
+            setTimeout(() => location.reload(), 1000); // This is a fallback: reload once
+        }
+    }, 300); // Small delay to ensure DOM and YouTube API loaded
 });

@@ -12,14 +12,14 @@ let onPlayerReadyCallbacks = [];
 window.onYouTubeIframeAPIReady = function () {
     const container = document.getElementById("youtube-player");
     if (!container) {
-        console.warn("#youtube-player not found on this page");
+        console.warn("#youtube-player not found");
         return;
     }
 
     player = new YT.Player(container, {
         height: "360",
         width: "640",
-        videoId: "", // No video loaded initially
+        videoId: "", // Start tomt
         playerVars: {
             autoplay: 0,
             controls: 1,
@@ -34,10 +34,6 @@ window.onYouTubeIframeAPIReady = function () {
         }
     });
 };
-
-
-window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
 /**
  * Loads and plays a specific YouTube video in the existing player.
  * 
@@ -47,10 +43,10 @@ window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
  */
 function playYouTubeVideo(videoId) {
     if (player && typeof player.loadVideoById === "function") {
-        console.log("▶️ Playing video:", videoId);
+        console.log("Playing video:", videoId);
         player.loadVideoById(videoId);
     } else {
-        console.warn("YouTube player not ready...");
+        console.warn("YouTube player not ready yet... queueing video:", videoId);
         onPlayerReadyCallbacks.push(() => {
             console.log("(Delayed) Playing video:", videoId);
             player.loadVideoById(videoId);
@@ -58,5 +54,5 @@ function playYouTubeVideo(videoId) {
     }
 }
 
-// Function globally accessible for YouTube API
 window.playYouTubeVideo = playYouTubeVideo;
+window.getYouTubePlayer = () => player;
