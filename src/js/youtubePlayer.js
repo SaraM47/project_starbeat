@@ -29,10 +29,11 @@ function onYouTubeIframeAPIReady() {
  * playYouTubeVideo("2Ek3WMM7I-0"); // Plays Ariana Grande - Break Free
  */
 function playYouTubeVideo(videoId) {
-    if (player) {
+    if (player && player.loadVideoById) {
         player.loadVideoById(videoId); 
     } else {
-        console.error("YouTube player is not ready.");
+        console.warn("YouTube player is not ready yet...");
+        setTimeout(() => playYouTubeVideo(videoId), 500); 
     }
 }
 
