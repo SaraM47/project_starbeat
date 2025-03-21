@@ -3,6 +3,7 @@
  * @type {YT.Player | null}
  */
 let player;
+let onPlayerReadyCallbacks = [];
 
 /**
  * Initializes the YouTube IFrame API and creates the player.
