@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (event) => {
         if (event.target.closest(".play-song")) {
             const videoId = event.target.closest(".play-song").dataset.videoId;
-            playYouTubeVideo(videoId); 
+            waitForPlayer(videoId);
         }
     });
 
@@ -155,3 +155,16 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Player control buttons not found!");
     }
 });
+
+/**
+ * Waits for the YouTube player to be ready before playing video.
+ * @param {string} videoId - YouTube video ID to load
+ */
+function waitForPlayer(videoId) {
+    if (window.player && typeof player.loadVideoById === "function") {
+        player.loadVideoById(videoId);
+    } else {
+        console.warn("YouTube player is not ready yet... retrying");
+        setTimeout(() => waitForPlayer(videoId), 500);
+    }
+}
