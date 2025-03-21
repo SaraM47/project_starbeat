@@ -36,52 +36,6 @@
    http://localhost:1234
    ```
 
-## Folder Structure
-```
-src/
-│── css/
-│   ├── abstracts/
-│   │   ├── _layout.scss
-│   │   ├── _mixins.scss
-│   │   ├── _variables.scss
-│   ├── assets/images/
-│   ├── base/
-│   │   ├── _base.scss
-│   │   ├── _typography.scss
-│   ├── components/
-│   │   ├── _buttons.scss
-│   │   ├── _cursor.scss
-│   │   ├── _loading.scss
-│   ├── layout/
-│   │   ├── _footer.scss
-│   │   ├── _header.scss
-│   ├── pages/
-│   │   ├── _explore.scss
-│   │   ├── _favorites.scss
-│   │   ├── _index.scss
-│   │   ├── _search.scss
-│   ├── themes/
-│   │   ├── _themes.scss
-│   ├── vendors/
-│   │   ├── _google-fonts.scss
-│   ├── main.scss
-│── js/
-│   ├── cursor.js
-│   ├── explore.js
-│   ├── favorites.js
-│   ├── main.js
-│   ├── musicPlayer.js
-│   ├── search.js
-│   ├── spotify.js
-│   ├── theme.js
-│   ├── youtubePlayer.js
-│── explore.html
-│── favorites.html
-│── index.html
-│── search.html
-│── README.md
-```
-
 ## Known Issues & Solutions
 
 - **YouTube API warnings in the console**: These are harmless warnings from third-party services and do not affect functionality.
