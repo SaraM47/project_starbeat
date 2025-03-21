@@ -2,6 +2,7 @@
  * Global variable for the YouTube Player instance.
  * @type {YT.Player | null}
  */
+let player;
 let playerReadyResolve;
 const playerReady = new Promise(resolve => {
     playerReadyResolve = resolve;
