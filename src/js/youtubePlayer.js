@@ -1,16 +1,23 @@
 /**
  * Global variable for the YouTube Player instance.
+ * Initialized by the YouTube IFrame API when ready.
  * @type {YT.Player | null}
  */
 let player;
+
+/**
+ * Promise that resolves when the YouTube player is ready.
+ * Used to delay actions until the player is initialized.
+ * @type {Promise<void>}
+ */
 let playerReadyResolve;
 const playerReady = new Promise(resolve => {
     playerReadyResolve = resolve;
 });
 
 /**
- * Initializes the YouTube IFrame API and creates the player.
- * This function is called automatically by the YouTube API.
+ * Called automatically by the YouTube IFrame API once it's loaded.
+ * Initializes the YouTube Player and resolves the `playerReady` Promise.
  */
 window.onYouTubeIframeAPIReady = function () {
     const container = document.getElementById("youtube-player");
@@ -38,8 +45,10 @@ window.onYouTubeIframeAPIReady = function () {
 };
 
 /**
- * Loads and plays a specific YouTube video in the existing player.
- * 
+ * Loads and plays a specific YouTube video once the player is ready.
+ *
+ * @async
+ * @function
  * @param {string} videoId - The unique ID of the YouTube video to play.
  * @example
  * playYouTubeVideo("2Ek3WMM7I-0"); // Plays Ariana Grande - Break Free
@@ -55,6 +64,12 @@ async function playYouTubeVideo(videoId) {
     }
 }
 
+/**
+ * Returns the initialized YouTube player instance.
+ *
+ * @function
+ * @returns {YT.Player | null} The YouTube player instance or null if not yet initialized.
+ */
 function getYouTubePlayer() {
     return player;
 }
