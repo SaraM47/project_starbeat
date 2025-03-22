@@ -40,6 +40,15 @@ $loading-text-light: #ffffff;
 $loading-bg-light: #ffffff;
 $loading-text-dark: #000000;
 
+// Album section shadow effect on Home page
+$album-mask: linear-gradient(
+  to right,
+  rgba(0, 0, 0, 0),
+  rgba(0, 0, 0, 1) 20%,
+  rgba(0, 0, 0, 1) 80%,
+  rgba(0, 0, 0, 0)
+);
+
 // Gradient colors for buttons
 $btn-gradient: linear-gradient(90deg, #FF80AB 0%, #C2A2FF 100%);
 // Hover effect for buttons
