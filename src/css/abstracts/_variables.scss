@@ -49,6 +49,9 @@ $album-mask: linear-gradient(
   rgba(0, 0, 0, 0)
 );
 
+// Hover shadow effect for artist cards in Explore page
+$artist-hover-shadow: 0px 0px 12px rgba(255, 0, 150, 0.6);
+
 // Gradient colors for buttons
 $btn-gradient: linear-gradient(90deg, #FF80AB 0%, #C2A2FF 100%);
 // Hover effect for buttons
