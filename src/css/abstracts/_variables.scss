@@ -32,6 +32,10 @@ $mobile-nav-bg-light: #fff6a9;
 $font-size-base-mobile: 1rem;
 $font-size-large-mobile: 1.2rem;
 $font-size-xlarge-mobile: 2rem;
+// Box shadow for fixed bottom navigation
+$mobile-nav-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+// Link color for mobile navigation
+$mobile-nav-link-color: #000;
 
 // Loading page - Dark mode
 $loading-bg-dark: #000000;
