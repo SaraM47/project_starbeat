@@ -39,6 +39,11 @@ window.onYouTubeIframeAPIReady = function () {
             onReady: () => {
                 console.log("YouTube Player is ready");
                 playerReadyResolve(); 
+
+                // Call the explore.js function
+                if (typeof initYouTubeSection === "function") {
+                    initYouTubeSection();
+                }
             }
         }
     });
