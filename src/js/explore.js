@@ -157,14 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
             yt?.stopVideo();
         });
     }
-
-    // Wait for iframe API to load and init UI
-    setTimeout(() => {
-        if (typeof YT !== "undefined" && typeof YT.Player !== "undefined") {
-            initYouTubeSection();
-        } else {
-            console.warn("Waiting for YouTube IFrame API...");
-            setTimeout(() => location.reload(), 1000); // This is a fallback: reload once
-        }
-    }, 300); // Small delay to ensure DOM and YouTube API loaded
 });
+
+window.initYouTubeSection = initYouTubeSection;
