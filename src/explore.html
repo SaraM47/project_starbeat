@@ -73,9 +73,35 @@
             <div class="artist-grid"></div>
         </section>
 
-        <!-- YouTube Player -->
-        <div class="youtube-player-section">
-            <div id="youtube-player"></div>
+        <!-- Popup Music Player -->
+        <div id="music-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <div class="music-player">
+                    <div class="gif-frame">
+                        <!-- Put a default image instead of empty src -->
+                        <img id="song-gif" src="css/assets/images/default-record-spin.gif" alt="Music GIF">
+                    </div>
+                    <div class="song-info">
+                        <h3 id="song-title"></h3>
+                        <h3 id="artist-name"></h3>
+                        <i class="fa-regular fa-heart like-btn"></i>
+                    </div>
+                    <div class="progress-container">
+                        <label for="progress-bar" class="sr-only">Track progress</label>
+                        <input type="range" id="progress-bar" value="0">
+                    </div>
+                    <div class="controls">
+                        <i class="fa-solid fa-shuffle shuffle-btn"></i>
+                        <i class="fa-solid fa-backward-step prev-btn"></i>
+                        <i class="fa-solid fa-circle-play play-btn"></i>
+                        <i class="fa-solid fa-forward-step next-btn"></i>
+                        <i class="fa-solid fa-repeat repeat-btn"></i>
+                    </div>
+                    <!-- YouTube Player -->
+                    <div id="youtube-player"></div>
+                </div>
+            </div>
         </div>
 
         <section class="wave-section">
