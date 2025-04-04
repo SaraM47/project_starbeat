@@ -1,3 +1,12 @@
+import gifForever from "../css/assets/images/milk-mocha-bear-dance.gif";
+import gifInDaClub from "../css/assets/images/giphy.gif";
+import gifBeautyBeat from "../css/assets/images/music.gif";
+import gifHips from "../css/assets/images/muddu-dance.gif";
+import gif24k from "../css/assets/images/bugcat-capoo.gif";
+import gifShapeOfYou from "../css/assets/images/cute-music.gif";
+import gifBTS from "../css/assets/images/bt21-cute.gif";
+import gifOneKiss from "../css/assets/images/little-bad-bear-dancing-listening.gif";
+
 /**
  * Handles fetching and rendering content for the Explore page.
  * It loads trending tracks, artists, genres, and integrates a YouTube player.
@@ -79,18 +88,19 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Initializes the YouTube player section and adds song list functionality.
  * @returns {void}
  */
+window.player = null;
+
 document.addEventListener("DOMContentLoaded", () => {
+    let pendingVideoId = null;
+
     function initYouTubeSection() {
+        console.log("YT API loaded");
+
         const youtubeSection = document.createElement("section");
         youtubeSection.classList.add("youtube-player-section");
         youtubeSection.innerHTML = `
             <h2>Listen to their songs</h2>
-            <div id="youtube-player"></div>
-            <div class="player-controls">
-            <button id="play-btn"><i class="fas fa-play"></i> Play</button>
-            <button id="pause-btn"><i class="fas fa-pause"></i> Pause</button>
-            <button id="stop-btn"><i class="fas fa-stop"></i> Stop</button>
-            </div>
+            <div id="youtube-player" style="width: 0; height: 0; overflow: hidden;"></div>
         `;
 
         const artistSection = document.querySelector(".top-artists");
@@ -98,30 +108,26 @@ document.addEventListener("DOMContentLoaded", () => {
             artistSection.insertAdjacentElement("afterend", youtubeSection);
         }
 
-        /**
-        * Song list with YouTube Video IDs.
-        * @type {Array<Object>}
-        */    
         const songs = [
-            { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE" },
-            { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss" },
-            { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE" },
-            { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM" },
-            { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY" },
-            { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ" },
-            { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE" },
-            { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE" }
+            { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE", gif: gifForever },
+            { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss", gif: gifInDaClub },
+            { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE", gif: gifBeautyBeat },
+            { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM", gif: gifHips },
+            { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY", gif: gif24k },
+            { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ", gif: gifShapeOfYou },
+            { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE", gif: gifBTS },
+            { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE", gif: gifOneKiss },
         ];
 
         const songList = document.createElement("div");
         songList.classList.add("song-list");
 
-        songs.forEach(song => {
+        songs.forEach((song, index) => {
             const songItem = document.createElement("div");
             songItem.classList.add("song-item");
             songItem.innerHTML = `
                 <p><strong>${song.title}</strong> - ${song.artist}</p>
-                <button class="play-song" data-video-id="${song.videoId}">
+                <button class="play-song" data-index="${index}" data-video-id="${song.videoId}">
                     <i class="fas fa-play"></i> Play
                 </button>
             `;
@@ -130,41 +136,137 @@ document.addEventListener("DOMContentLoaded", () => {
 
         youtubeSection.appendChild(songList);
 
+        function createYouTubePlayer(videoId) {
+            if (window.player) {
+                window.player.loadVideoById(videoId);
+                window.player.playVideo();
+            } else {
+                pendingVideoId = videoId;
+
+                window.player = new YT.Player("youtube-player", {
+                    height: "0",
+                    width: "0",
+                    videoId: videoId,
+                    playerVars: { autoplay: 0, controls: 0 },
+                    events: {
+                        onReady: (event) => {
+                            console.log("Player is ready");
+                            if (pendingVideoId) {
+                                event.target.loadVideoById(pendingVideoId);
+                                event.target.playVideo();
+                                pendingVideoId = null;
+                            }
+                        }
+                    },
+                });
+            }
+        }
+
+        function playYouTubeVideo(videoId) {
+            createYouTubePlayer(videoId);
+        }
+
+        window.playYouTubeVideo = playYouTubeVideo;
+
         document.addEventListener("click", (event) => {
-            if (event.target.closest(".play-song")) {
-                const videoId = event.target.closest(".play-song").dataset.videoId;
-                window.playYouTubeVideo(videoId);
+            const playButton = event.target.closest(".play-song");
+            if (playButton) {
+                const songIndex = playButton.dataset.index;
+                const song = songs[songIndex];
+
+                if (song) {
+                    console.log("Playing song:", song.title);
+
+                    document.getElementById("song-title").textContent = song.title;
+                    document.getElementById("artist-name").textContent = song.artist;
+                    document.getElementById("song-gif").src = song.gif || "css/assets/images/default.gif";
+
+                    const popup = document.getElementById("music-popup");
+                    if (popup) {
+                        popup.style.display = "flex";
+                    } else {
+                        console.error("Popup-rutan hittades inte!");
+                    }
+
+                    // Play the video after player is ready
+                    playYouTubeVideo(song.videoId);
+                }
             }
         });
 
-        // Control buttons for the YouTube player
         const playBtn = document.getElementById("play-btn");
         const pauseBtn = document.getElementById("pause-btn");
         const stopBtn = document.getElementById("stop-btn");
 
         playBtn?.addEventListener("click", () => {
-            const yt = window.getYouTubePlayer();
-            yt?.playVideo();
+            if (window.player) window.player.playVideo();
         });
 
         pauseBtn?.addEventListener("click", () => {
-            const yt = window.getYouTubePlayer();
-            yt?.pauseVideo();
+            if (window.player) window.player.pauseVideo();
         });
 
         stopBtn?.addEventListener("click", () => {
-            const yt = window.getYouTubePlayer();
-            yt?.stopVideo();
+            if (window.player) window.player.stopVideo();
         });
     }
 
-    // Wait for iframe API to load and init UI
-    setTimeout(() => {
+    let attempts = 0;
+    const checkYouTubeAPI = () => {
         if (typeof YT !== "undefined" && typeof YT.Player !== "undefined") {
             initYouTubeSection();
-        } else {
+        } else if (attempts < 5) {
             console.warn("Waiting for YouTube IFrame API...");
-            setTimeout(() => location.reload(), 1000); // This is a fallback: reload once
+            attempts++;
+            setTimeout(checkYouTubeAPI, 1000);
+        } else {
+            console.error("YouTube API failed to load.");
         }
-    }, 300); // Small delay to ensure DOM and YouTube API loaded
+    };
+
+    setTimeout(checkYouTubeAPI, 300);
+});
+
+// Close popup when user clicks close button
+document.addEventListener("click", (event) => {
+    const closeButton = event.target.closest(".close-btn");
+    if (closeButton) {
+        const popup = document.getElementById("music-popup");
+        if (popup) {
+            popup.style.display = "none";
+
+            if (window.player) {
+                window.player.stopVideo();
+            }
+        } else {
+            console.error("Popup-rutan kunde inte hittas!");
+        }
+    }
+});
+
+// Toggle play/pause on click
+document.addEventListener("DOMContentLoaded", () => {
+    const playPauseButton = document.querySelector(".controls .play-btn");
+
+    if (playPauseButton) {
+        playPauseButton.addEventListener("click", () => {
+            if (window.player) {
+                const playerState = window.player.getPlayerState(); // 1 = playing, 2 = paused
+
+                if (playerState === 1) {
+                    window.player.pauseVideo();
+                    playPauseButton.classList.remove("fa-pause");
+                    playPauseButton.classList.add("fa-play");
+                } else {
+                    window.player.playVideo();
+                    playPauseButton.classList.remove("fa-play");
+                    playPauseButton.classList.add("fa-pause");
+                }
+            } else {
+                console.error("YouTube-spelaren är inte initierad.");
+            }
+        });
+    } else {
+        console.error("Kunde inte hitta .play-btn i .controls");
+    }
 });
