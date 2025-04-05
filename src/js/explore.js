@@ -7,6 +7,17 @@ import gifShapeOfYou from "../css/assets/images/cute-music.gif";
 import gifBTS from "../css/assets/images/bt21-cute.gif";
 import gifOneKiss from "../css/assets/images/little-bad-bear-dancing-listening.gif";
 
+const songs = [
+    { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE", gif: gifForever },
+    { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss", gif: gifInDaClub },
+    { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE", gif: gifBeautyBeat },
+    { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM", gif: gifHips },
+    { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY", gif: gif24k },
+    { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ", gif: gifShapeOfYou },
+    { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE", gif: gifBTS },
+    { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE", gif: gifOneKiss },
+];
+
 /**
  * Handles fetching and rendering content for the Explore page.
  * It loads trending tracks, artists, genres, and integrates a YouTube player.
@@ -107,17 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (artistSection) {
             artistSection.insertAdjacentElement("afterend", youtubeSection);
         }
-
-        const songs = [
-            { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE", gif: gifForever },
-            { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss", gif: gifInDaClub },
-            { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE", gif: gifBeautyBeat },
-            { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM", gif: gifHips },
-            { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY", gif: gif24k },
-            { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ", gif: gifShapeOfYou },
-            { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE", gif: gifBTS },
-            { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE", gif: gifOneKiss },
-        ];
 
         const songList = document.createElement("div");
         songList.classList.add("song-list");
@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (playPauseButton) {
         playPauseButton.addEventListener("click", () => {
             if (window.player) {
-                const playerState = window.player.getPlayerState(); // 1 = playing, 2 = paused
+                const playerState = window.player.getPlayerState();
 
                 if (playerState === 1) {
                     window.player.pauseVideo();
@@ -263,10 +263,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     playPauseButton.classList.add("fa-pause");
                 }
             } else {
-                console.error("YouTube-spelaren är inte initierad.");
+                console.error("YouTube player is not initialized.");
             }
         });
     } else {
-        console.error("Kunde inte hitta .play-btn i .controls");
+        console.error("Could not find .play-button in .controls");
     }
 });
