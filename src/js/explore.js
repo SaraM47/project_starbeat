@@ -1,21 +1,12 @@
-import gifForever from "../css/assets/images/milk-mocha-bear-dance.gif";
-import gifInDaClub from "../css/assets/images/giphy.gif";
-import gifBeautyBeat from "../css/assets/images/music.gif";
-import gifHips from "../css/assets/images/muddu-dance.gif";
-import gif24k from "../css/assets/images/bugcat-capoo.gif";
-import gifShapeOfYou from "../css/assets/images/cute-music.gif";
-import gifBTS from "../css/assets/images/bt21-cute.gif";
-import gifOneKiss from "../css/assets/images/little-bad-bear-dancing-listening.gif";
-
 const songs = [
-    { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE", gif: gifForever },
-    { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss", gif: gifInDaClub },
-    { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE", gif: gifBeautyBeat },
-    { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM", gif: gifHips },
-    { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY", gif: gif24k },
-    { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ", gif: gifShapeOfYou },
-    { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE", gif: gifBTS },
-    { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE", gif: gifOneKiss },
+    { title: "Forever", artist: "Chris Brown", videoId: "5sMKX22BHeE", gifId: "gif-forever" },
+    { title: "In Da Club", artist: "50 Cent", videoId: "5qm8PH4xAss", gifId: "gif-in-da-club" },
+    { title: "Beauty and a Beat", artist: "Justin Bieber", videoId: "Lf9OgcXV5cE", gifId: "gif-beauty-beat" },
+    { title: "Hips Don’t Lie", artist: "Shakira", videoId: "DUT5rEU6pqM", gifId: "gif-hips" },
+    { title: "24K Magic", artist: "Bruno Mars", videoId: "UqyT8IEBkvY", gifId: "gif-24k" },
+    { title: "Shape of You", artist: "Ed Sheeran", videoId: "_dK2tDK9grQ", gifId: "gif-shape-of-you" },
+    { title: "Permission to Dance", artist: "BTS", videoId: "LCpjdohpuEE", gifId: "gif-bts" },
+    { title: "One Kiss", artist: "Calvin Harris, Dua Lipa", videoId: "Bm8rz-llMhE", gifId: "gif-one-kiss" },
 ];
 
 /**
@@ -179,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     document.getElementById("song-title").textContent = song.title;
                     document.getElementById("artist-name").textContent = song.artist;
-                    document.getElementById("song-gif").src = song.gif || "css/assets/images/default.gif";
+                    document.getElementById("song-gif").src = document.getElementById(song.gifId)?.src || "css/assets/images/default-record-spin.gif";
 
                     const popup = document.getElementById("music-popup");
                     if (popup) {
