@@ -44,3 +44,8 @@
 
 ---
 *StarBeat is a frontend development course project where we practice using APIs, AJAX, SCSS, and JavaScript.*
+
+## Demo
+https://github.com/user-attachments/assets/f4ccf4d7-febe-47ac-916a-d740dde2fae2 
+
+
