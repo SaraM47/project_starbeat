@@ -45,6 +45,14 @@
 ---
 *StarBeat is a frontend development course project where we practice using APIs, AJAX, SCSS, and JavaScript.*
 
+## UPDATE: Spotify API limitation notice
+
+This application relies on the Spotify Web API in Development Mode. Due to Spotify’s February and March 2026 Development Mode changes, several features may no longer function normally in production or public testing environments. These changes include a requirement for Spotify Premium, a limit of five authorized users per Client ID, and restrictions tied to Development Mode usage. Spotify postponed endpoint reductions for existing integrations, but the other limits still apply.
+
+Because of this, some API requests may return 403 Forbidden, and features such as loading new releases, fetching tracks, or testing the app as an external user may fail. Apps in Extended Quota Mode are not affected by these particular Development Mode restrictions. 
+
+A demo video is included below in this repository showing the application functioning correctly before these platform changes were introduced.
+
 ## Demo
 https://github.com/user-attachments/assets/f4ccf4d7-febe-47ac-916a-d740dde2fae2 
 
